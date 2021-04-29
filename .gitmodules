@@ -1,0 +1,3 @@
+[submodule "installSynApps"]
+	path = installSynApps
+	url = https://github.com/NSLS-II/installSynApps
