@@ -1,0 +1,105 @@
+#
+# INSTALL_CONFIG file saved by installSynApps on 2021-04-07 10:54:12.623876
+#
+
+INSTALL=/epics/src
+
+
+#MODULE_NAME    MODULE_VERSION          MODULE_PATH                             MODULE_REPO         CLONE_MODULE    BUILD_MODULE    PACKAGE_MODULE
+#--------------------------------------------------------------------------------------------------------------------------------------------------
+
+GIT_URL=https://github.com/epics-base/
+
+EPICS_BASE       R7.0.5               $(INSTALL)/base                          epics-base               YES              YES              YES
+
+GIT_URL=https://github.com/EPICS-synApps/
+
+SUPPORT          R6-2                 $(INSTALL)/support                       support                  YES              YES              NO
+CONFIGURE        R6-2                 $(SUPPORT)/configure                     configure                YES              YES              NO
+UTILS            R6-2                 $(SUPPORT)/utils                         utils                    YES              YES              NO
+
+WGET_URL=http://www-csr.bessy.de/control/SoftDist/sequencer/releases/
+
+SNCSEQ           2.2.8                $(SUPPORT)/seq                           seq-2.2.8.tar.gz         YES              YES              YES
+
+GIT_URL=https://github.com/epics-modules/
+
+IPAC             2.16                 $(SUPPORT)/ipac                          ipac                     YES              YES              YES
+ASYN             R4-41                $(SUPPORT)/asyn                          asyn                     YES              YES              YES
+AUTOSAVE         R5-10-2              $(SUPPORT)/autosave                      autosave                 YES              YES              YES
+BUSY             R1-7-3               $(SUPPORT)/busy                          busy                     YES              YES              YES
+CALC             R3-7-3               $(SUPPORT)/calc                          calc                     YES              YES              YES
+DEVIOCSTATS      master               $(SUPPORT)/iocStats                      iocStats                 YES              YES              YES
+SCALER           master               $(SUPPORT)/scaler                        scaler                   YES              YES              YES
+SSCAN            R2-11-3              $(SUPPORT)/sscan                         sscan                    YES              YES              YES
+IPUNIDIG         R2-12                $(SUPPORT)/ipUnidig                      ipUnidig                 YES              YES              YES
+XSPRESS3         master               $(SUPPORT)/xspress3                      xspress3                 YES              YES              YES
+QUADEM           R9-4                 $(SUPPORT)/quadEM                        quadEM                   YES              YES              YES
+CAPUTLOG         R3.7                 $(SUPPORT)/caPutLog                      caPutLog                 YES              YES              YES
+STD              R3-6-2               $(SUPPORT)/std                           std                      YES              YES              YES
+MCA              R7-9                 $(SUPPORT)/mca                           mca                      YES              YES              YES
+IP               R2-21                $(SUPPORT)/ip                            ip                       YES              YES              YES
+DELAYGEN         R1-2-2               $(SUPPORT)/delaygen                      delaygen                 YES              YES              YES
+MODBUS           R3-2                 $(SUPPORT)/modbus                        modbus                   YES              YES              YES
+LUA              R3-0-2               $(SUPPORT)/lua                           lua                      YES              YES              YES
+MOTOR            R7-2-2               $(SUPPORT)/motor                         motor                    YES              YES              YES
+TPMAC            master               $(SUPPORT)/tpmac                         tpmac                    YES              YES              YES
+CAMAC            R2-7-3               $(SUPPORT)/camac                         camac                    YES              YES              YES
+
+
+# Hacky solution here for modules with non-standard formats. Just standardize them instead of working around them
+GIT_URL=https://github.com/jwlodek/
+
+PROLOGIX_GPIB    master               $(SUPPORT)/PrologixGPIB                  PrologixGPIB             YES              YES              YES
+SNMP             master               $(SUPPORT)/snmp                          snmp                     YES              YES              YES
+#EUROTHERM2K      master               $(SUPPORT)/eurotherm2k                   eurotherm2k              YES              YES              YES
+ETHER_IP         master               $(SUPPORT)/ether_ip                      ether_ip                 YES              YES              YES
+S7PLC            master               $(SUPPORT)/s7plc                         s7plc                    YES              YES              YES
+GENSUB           master               $(SUPPORT)/genSub                        genSub                   YES              YES              YES
+PMACUTIL         master               $(SUPPORT)/pmacutil                      pmacutil                 YES              YES              YES
+HEXAPODPIMOTOR   master               $(SUPPORT)/hexapodPIMotor                hexapodPIMotor           YES              YES              YES
+VACTRL           master               $(SUPPORT)/vactrl                        vactrl                   YES              YES              YES
+
+
+GIT_URL=https://github.com/ChannelFinder/
+
+RECCASTER       master               $(SUPPORT)/reccaster                       recsync                  YES              YES              YES
+
+
+GIT_URL=https://github.com/paulscherrerinstitute/
+
+STREAM          2.8.10               $(SUPPORT)/stream                        StreamDevice             YES              YES              YES
+
+
+GIT_URL=https://github.com/epics-extensions/
+
+EXTENSIONS      master               $(SUPPORT)/extensions                    extensions               YES              YES              YES
+MEDM            master               $(EXTENSIONS)/src/medm                   medm                     YES              NO               NO
+
+
+GIT_URL=https://github.com/jwlodek/
+
+EDM             master               $(EXTENSIONS)/src/edm                    edm                      YES              NO               NO
+
+
+GIT_URL=https://github.com/areaDetector/
+
+AREA_DETECTOR    R3-10                $(SUPPORT)/areaDetector                  areaDetector             YES              YES              NO
+ADSUPPORT        R1-9-1               $(AREA_DETECTOR)/ADSupport               ADSupport                YES              YES              YES
+ADCORE           R3-10                $(AREA_DETECTOR)/ADCore                  ADCore                   YES              YES              YES
+ADPERKINELMER    master               $(AREA_DETECTOR)/ADPerkinElmer           ADPerkinElmer            NO               NO               NO
+ADGENICAM        master               $(AREA_DETECTOR)/ADGenICam               ADGenICam                NO               NO               NO
+ADANDOR3         master               $(AREA_DETECTOR)/ADAndor3                ADAndor3                 YES              YES              YES
+ADPROSILICA      R2-5                 $(AREA_DETECTOR)/ADProsilica             ADProsilica              YES              YES              YES
+ADSIMDETECTOR    master               $(AREA_DETECTOR)/ADSimDetector           ADSimDetector            YES              YES              YES
+ADPILATUS        R2-9                 $(AREA_DETECTOR)/ADPilatus               ADPilatus                YES              YES              YES
+ADMERLIN         master               $(AREA_DETECTOR)/ADMerlin                ADMerlin                 YES              YES              YES
+ADARAVIS         master               $(AREA_DETECTOR)/ADAravis                ADAravis                 NO               NO               NO
+ADEIGER          R2-7                 $(AREA_DETECTOR)/ADEiger                 ADEiger                  YES              YES              YES
+ADVIMBA          master               $(AREA_DETECTOR)/ADVimba                 ADVimba                  NO               NO               NO
+ADPOINTGREY      master               $(AREA_DETECTOR)/ADPointGrey             ADPointGrey              YES              YES              YES
+ADANDOR          R2-8                 $(AREA_DETECTOR)/ADAndor                 ADAndor                  NO               NO               NO
+ADDEXELA         R2-3                 $(AREA_DETECTOR)/ADDexela                ADDexela                 NO               NO               NO
+ADMYTHEN         master               $(AREA_DETECTOR)/ADMythen                ADMythen                 YES              YES              YES
+ADURL            master               $(AREA_DETECTOR)/ADURL                   ADURL                    YES              YES              YES
+ADUVC            R1-6                 $(AREA_DETECTOR)/ADUVC                   ADUVC                    YES              YES              YES
