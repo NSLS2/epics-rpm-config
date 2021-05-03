@@ -1,0 +1,29 @@
+--- epicsbundle-1/bin/linux-x86_64/makeBaseApp.pl	2021-04-27 18:51:58.276740000 -0400
++++ epicsbundle-1/bin/linux-x86_64/makeBaseApp.pl	2021-04-27 19:28:20.684609000 -0400
+@@ -3,7 +3,7 @@
+ # Authors: Ralph Lange, Marty Kraimer, Andrew Johnson and Janet Anderson
+ 
+ use FindBin qw($Bin);
+-use lib ("$Bin/../../lib/perl");
++use lib ("/usr/lib/epics/lib/perl");
+ 
+ use Cwd;
+ use Getopt::Std;
+@@ -65,7 +65,7 @@
+             } elsif (-r "$base\@Common") {	# Default version exists
+                 $base = '' unless ($filearch eq "Common" && -s $file);
+             } else {			# No default version
+-                $base = '';
++                $base = '/usr/lib/epics';
+             }
+             $file = $base;	# Strip the @... part from the target name
+         }
+@@ -177,7 +177,7 @@
+     } elsif ($ENV{EPICS_MBA_BASE}) { # third choice is env var EPICS_MBA_BASE
+         $epics_base = UnixPath($ENV{EPICS_MBA_BASE});
+     } elsif ($command =~ m|/bin/|) { # assume script was run with full path to base
+-        $epics_base = $command;
++        $epics_base = "/usr/lib/epics";
+         $epics_base =~ s|^(.*)/bin/.*makeBaseApp.*|$1|;
+     }
+     $epics_base and -d "$epics_base" or Cleanup(1, "Can't find EPICS base");
