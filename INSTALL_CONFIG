@@ -50,7 +50,7 @@ CAMAC            R2-7-3               $(SUPPORT)/camac                         c
 GIT_URL=https://code.nsls2.bnl.gov/epics-modules-nsls2/
 
 S7PLC            master               $(SUPPORT)/s7plc                         s7plc                    YES              YES              YES
-
+UIOCSYSTEM       master               $(SUPPORT)/uIOCSystem                    uIOCSystem               YES              YES              YES
 
 # Hacky solution here for modules with non-standard formats. Just standardize them instead of working around them
 GIT_URL=https://github.com/jwlodek/
