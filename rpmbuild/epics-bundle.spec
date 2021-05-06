@@ -1,6 +1,6 @@
-Name:           epicsbundle
+Name:           epics-bundle
 Version:        0.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD
@@ -53,7 +53,7 @@ mkdir -p %{buildroot}/usr/bin
 cp ./install/epics/bin/linux-x86_64/{caget,cainfo,camonitor,caput,caRepeater,casw,pvget,pvinfo,pvmonitor,pvput,pvlist,edm,medm,msi} %{buildroot}/usr/bin/
 cp ./install/epics/bin/linux-x86_64/makeBaseApp.pl %{buildroot}/usr/bin/makeBaseApp
 mkdir -p %{buildroot}/etc/ld.so.conf.d
-cp ./rpmbuild/epicsbundle.conf %{buildroot}/etc/ld.so.conf.d/.
+cp ./rpmbuild/epics-bundle.conf %{buildroot}/etc/ld.so.conf.d/.
 #mkdir -p %{buildroot}/lib64
 #cp ./install/epics/lib/linux-x86_64/lib*.so* %{buildroot}/lib64/
 chmod u+w -R %{buildroot}
@@ -68,6 +68,9 @@ chmod u+w -R %{buildroot}
 #/lib64/*
 
 %changelog
+* Thu May 06 2021 Anton Derbenev <aderbenev@bnl.gov> - 0.1-4
+- Package rename to epics-bundle
+
 * Mon May 3 2021 Anton Derbenev <aderbenev@bnl.gov> - 0.1-3
 - Performing the source build during rpm build
 
