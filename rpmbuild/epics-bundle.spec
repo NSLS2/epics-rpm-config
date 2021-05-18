@@ -1,6 +1,6 @@
 Name:           epics-bundle
 Version:        0.1
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD
@@ -68,6 +68,9 @@ chmod u+w -R %{buildroot}
 #/lib64/*
 
 %changelog
+* Tue May 18 2021 Jakub Wlodek <jwlodek@bnl.gov> - 0.1-5
+- Adding optics module
+
 * Thu May 06 2021 Anton Derbenev <aderbenev@bnl.gov> - 0.1-4
 - Package rename to epics-bundle
 
