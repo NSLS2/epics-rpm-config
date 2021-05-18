@@ -45,7 +45,7 @@ LUA              R3-0-2               $(SUPPORT)/lua                           l
 MOTOR            R7-2-2               $(SUPPORT)/motor                         motor                    YES              YES              YES
 TPMAC            master               $(SUPPORT)/tpmac                         tpmac                    YES              YES              YES
 CAMAC            R2-7-3               $(SUPPORT)/camac                         camac                    YES              YES              YES
-
+OPTICS           R2-13-5              $(SUPPORT)/optics                        optics                   YES              YES              YES
 
 GIT_URL=https://code.nsls2.bnl.gov/epics-modules-nsls2/
 
