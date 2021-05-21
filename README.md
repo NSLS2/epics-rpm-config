@@ -1,8 +1,9 @@
 # EPICS Configuration for RHEL 8
 
-<a href="https://https://jenkins.nsls2.bnl.gov/job/EPICS_SPEC/">
+<a href="https://jenkins.nsls2.bnl.gov/job/EPICS_SPEC/">
    <img src="https://jenkins.nsls2.bnl.gov/job/EPICS_SPEC/badge/icon" alt="Jenkins Build Status">
 </a>
+
 
 This repository reflects the current configuration of EPICS base + modules used to create the `epics-bundle` rpm.
 It is synced with several Jenkins projects that execute the build, package it as an RPM, and then sign and upload the rpm.
@@ -10,7 +11,7 @@ It is synced with several Jenkins projects that execute the build, package it as
 ### Test Environmnet Setup
 
 Before performing any work on the configuration, you may want to set up a test environment. First, clone this repository,
-and may a new development branch. You may also want to fork this repository first instead, and clone from there.
+and make a new development branch. You may also want to fork this repository first instead, and clone from there.
 
 ```
 git clone https://code.nsls2.bnl.gov/epics-modules-nsls2/rhel8-epics-config
@@ -31,7 +32,9 @@ cd installSynApps
 ./installCLI.py -c .. -b ../build -i ../install -p -f -y
 ```
 
-You may also add the `-d` flag to the `installCLI` call to have the tool print debug messages. Once the build/installation is
+You may also add the `-d` flag to the `installCLI` call to have the tool print debug messages. On a system with memory constraints, add
+the `-t #` flag to the command as well, where `#` is the number of threads you wish to use. Without this flag, the build will use
+as many threads as it can, which will accelerate the build process, but may use up to 12 GB of memory at peak. Once the build/installation is
 finished, you should see the typical EPICS packaging flat structure in `install`, and a folder-per-module structure in `build`.
 
 ### Adding a Module
