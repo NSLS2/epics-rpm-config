@@ -45,7 +45,7 @@ fi
 
 %install
 # Ignore invalid rpaths in EPICS build
-export QA_RPATHS=$[ 0x0002 ]
+export QA_RPATHS=$[ 0x0001 | 0x0002 ]
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/lib/epics
 cp -r ./install/epics/* %{buildroot}/usr/lib/epics/.
