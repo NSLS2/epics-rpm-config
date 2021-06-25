@@ -1,6 +1,6 @@
 Name:           epics-bundle
 Version:        0.1
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD
@@ -68,6 +68,9 @@ chmod u+w -R %{buildroot}
 #/lib64/*
 
 %changelog
+* Fri Jun 25 2021 Jakub Wlodek <jwlodek@bnl.gov> - 0.1-6
+- Adding ezca and EzcaScan extension modules
+  
 * Tue May 18 2021 Jakub Wlodek <jwlodek@bnl.gov> - 0.1-5
 - Adding optics module
 
