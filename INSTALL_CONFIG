@@ -79,11 +79,14 @@ GIT_URL=https://github.com/epics-extensions/
 
 EXTENSIONS      master               $(SUPPORT)/extensions                    extensions               YES              YES              YES
 MEDM            master               $(EXTENSIONS)/src/medm                   medm                     YES              NO               NO
+EZCA            master               $(EXTENSIONS)/src/ezca                   ezca                     YES              NO               NO
+EZCASCAN        master               $(EXTENSIONS)/src/EzcaScan               EzcaScan                 YES              NO               NO
 
 
 GIT_URL=https://github.com/jwlodek/
 
 EDM             master               $(EXTENSIONS)/src/edm                    edm                      YES              NO               NO
+
 
 
 GIT_URL=https://github.com/areaDetector/
