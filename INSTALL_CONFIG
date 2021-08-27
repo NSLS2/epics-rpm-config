@@ -18,7 +18,7 @@ SUPPORT          R6-2                 $(INSTALL)/support                       s
 CONFIGURE        R6-2                 $(SUPPORT)/configure                     configure                YES              YES              NO
 UTILS            R6-2                 $(SUPPORT)/utils                         utils                    YES              YES              NO
 
-WGET_URL=http://www-csr.bessy.de/control/SoftDist/sequencer/releases/
+WGET_URL=https://www-csr.bessy.de/control/SoftDist/sequencer/releases/
 
 SNCSEQ           2.2.8                $(SUPPORT)/seq                           seq-2.2.8.tar.gz         YES              YES              YES
 
