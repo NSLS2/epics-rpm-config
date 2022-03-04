@@ -1,6 +1,6 @@
 Name:           epics-bundle
 Version:        0.1
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD
@@ -31,12 +31,12 @@ EPICS base and modules bundle packaged as RPM.
 %build
 # %%configure
 # %%make_build
-if [ ! -d ./install/epics ]; then
-    mkdir build
-    mkdir install
+if [ ! -d ./INSTALL/epics ]; then
+    mkdir -p BUILD
+    mkdir -p INSTALL
     cd installSynApps
-    python3 -u installCLI.py -y -c .. -b ../build -i ../install -p -f
-    cd ../install
+    python3 -u installCLI.py -y -c .. -b ../BUILD -i ../INSTALL -p -f
+    cd ../INSTALL
     mv EPICS_* epics
     cd epics
     patch -p1 < ../../rpmbuild/makeBaseApp-basepath.patch
@@ -48,10 +48,10 @@ fi
 export QA_RPATHS=$[ 0x0001 | 0x0002 ]
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/lib/epics
-cp -r ./install/epics/* %{buildroot}/usr/lib/epics/.
+cp -r ./INSTALL/epics/* %{buildroot}/usr/lib/epics/.
 mkdir -p %{buildroot}/usr/bin
-cp ./install/epics/bin/linux-x86_64/{caget,cainfo,camonitor,caput,caRepeater,casw,pvget,pvinfo,pvmonitor,pvput,pvlist,edm,medm,msi} %{buildroot}/usr/bin/
-cp ./install/epics/bin/linux-x86_64/makeBaseApp.pl %{buildroot}/usr/bin/makeBaseApp
+cp ./INSTALL/epics/bin/linux-x86_64/{caget,cainfo,camonitor,caput,caRepeater,casw,pvget,pvinfo,pvmonitor,pvput,pvlist,edm,medm,msi} %{buildroot}/usr/bin/
+cp ./INSTALL/epics/bin/linux-x86_64/makeBaseApp.pl %{buildroot}/usr/bin/makeBaseApp
 mkdir -p %{buildroot}/etc/ld.so.conf.d
 cp ./rpmbuild/epics-bundle.conf %{buildroot}/etc/ld.so.conf.d/.
 #mkdir -p %{buildroot}/lib64
@@ -68,6 +68,9 @@ chmod u+w -R %{buildroot}
 #/lib64/*
 
 %changelog
+* Fri Mar 04 2022 Jakub Wlodek <jwlodek@bnl.gov> - 0.1-7
+- Include autosave and areaDetector common iocBoot files
+
 * Fri Jun 25 2021 Jakub Wlodek <jwlodek@bnl.gov> - 0.1-6
 - Adding ezca and EzcaScan extension modules
   
