@@ -1,3 +1,7 @@
 build/
+BUILD/
+INSTALL/
+RESULT/
+*.rpm
 install/
 *.swp
