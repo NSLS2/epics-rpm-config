@@ -23,19 +23,12 @@ git checkout -b my-dev-branch
 Next, run the build in order to get an EPICS installation on your system:
 
 ```
-# This is only necessary the first time, it will install any required yum/dnf packages
-./dependencyInstall.sh
+# This is only necessary the first time, it will install any required yum/dnf packages. Run with root/sudo/dzdo as needed
+sudo ./dependencyInstall.sh
 
-mkdir build
-mkdir install
-cd installSynApps
-./installCLI.py -c .. -b ../build -i ../install -p -f -y
+# This will install epics into the `INSTALL` directory. You can also use `make rpm` which will perform the local install and also generate an RPM
+make localinstall
 ```
-
-You may also add the `-d` flag to the `installCLI` call to have the tool print debug messages. On a system with memory constraints, add
-the `-t #` flag to the command as well, where `#` is the number of threads you wish to use. Without this flag, the build will use
-as many threads as it can, which will accelerate the build process, but may use up to 12 GB of memory at peak. Once the build/installation is
-finished, you should see the typical EPICS packaging flat structure in `install`, and a folder-per-module structure in `build`.
 
 ### Adding a Module
 
