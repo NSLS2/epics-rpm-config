@@ -15,7 +15,7 @@ flatbundle: dirs
 
 rpm: dirs
 	rpmbuild -v --define "_topdir %(pwd)" --define "_builddir %{_topdir}" --define "_rpmdir %{_topdir}" --define "_sourcedir %{_topdir}" --define "_specdir %{_topdir}/rpmbuild" --define "_srcrpmdir %{_topdir}" --define "_rpmfilename %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm" --define "debug_package %{nil}" -bb rpmbuild/epics-bundle.spec
-	mv *.srpm RESULT/.
+	mv *.rpm RESULT/.
 
 srpm: dirs
 	rpmbuild -v --define "_topdir %(pwd)" --define "_builddir %{_topdir}" --define "_rpmdir %{_topdir}" --define "_sourcedir %{_topdir}" --define "_specdir %{_topdir}/rpmbuild" --define "_srcrpmdir %{_topdir}" --define "_rpmfilename %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.srpm" --define "debug_package %{nil}" -bs rpmbuild/epics-bundle.spec
