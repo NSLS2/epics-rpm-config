@@ -23,37 +23,91 @@ git checkout -b my-dev-branch
 Next, run the build in order to get an EPICS installation on your system:
 
 ```
-# This is only necessary the first time, it will install any required yum/dnf packages
-./dependencyInstall.sh
+# This is only necessary the first time, it will install any required yum/dnf packages. Run with root/sudo/dzdo as needed
+sudo ./dependencyInstall.sh
 
-mkdir build
-mkdir install
-cd installSynApps
-./installCLI.py -c .. -b ../build -i ../install -p -f -y
+# This will install epics into the `INSTALL` directory. You can also use `make rpm` which will perform the local install and also generate an RPM
+make localinstall
 ```
-
-You may also add the `-d` flag to the `installCLI` call to have the tool print debug messages. On a system with memory constraints, add
-the `-t #` flag to the command as well, where `#` is the number of threads you wish to use. Without this flag, the build will use
-as many threads as it can, which will accelerate the build process, but may use up to 12 GB of memory at peak. Once the build/installation is
-finished, you should see the typical EPICS packaging flat structure in `install`, and a folder-per-module structure in `build`.
 
 ### Adding a Module
 
 To add a module to the configuration, you will need a few things. First, perform the environment setup in the previous section.
-Next, the module needs to be visible on the network either as a git repository (highly preferrable), or as a tarball that can be
-grabbed with wget. Download and unpack your module in the `build/support/` directory, edit the `configure/RELEASE` file to point to 
-the built directories for any dependancy modules, navigate to it, and try to build with `make`. In addition, make sure there is a
-`SUPPORT` macro defined in `configure/RELEASE`. This is required since the tool will use it as a relative path to find any other modules.
+
+Next, the module needs to be visible on the network either as a git repository (highly preferrable), or as a tarball that can be grabbed with wget. As an example, I will go through the process of adding the `optics` module located at `https://github.com/epics-modules/optics`.
 
 
-If this completes successfully, open the `INSTALL_CONFIG` file. If the URL from which the module is pulled is already listed, add a 
-line containing your module's information under it, in the same structure as the remaining modules. Otherwise, add a new URL and add your
-module's line under it. If it is a git repository, use `GIT_URL` otherwise, use `WGET_URL`.
+Download and unpack your module in the `BUILD/support/` directory, and if applicable, check out your desired version. Then, edit the `configure/RELEASE` file to point to the built directories for any dependancy modules, navigate to it, and try to build with `make`. In addition, make sure there is a `SUPPORT` macro defined in `configure/RELEASE`. This is required since the tool will use it as a relative path to find any other modules.
 
-Once you have added the module to the install config, re-run the build script as above and make sure your module builds successfully.
+For our optics example:
 
-Note that only the top level `lib`, `bin`, `protocol`, `pmc`, `db`, `dbd`, and `include` folders will be included in the installation,
-so make sure your module installs any required build artifacts to their proper locations.
+```
+# Enter the support directory and clone the module
+cd BUILD/support
+git clone https://github.com/epics-modules/optics
 
-Once you have confirmed that the builds succeeds, make a commit to your branch, push to gitlab, and make a merge request with the master
-branch of the main fork.
+# Check out the latest R2-13-5 tagged release
+cd optics && git checkout -q R2-13-5
+```
+
+Next we edit the `optics/configure/RELEASE` file to point the locations of any dependencies, and we make sure a `SUPPORT` macro is defined (if not, you will need to add this to the upstream source location). In our example the edited file looks like:
+
+```
+SUPPORT=/epics/utils/rhel8-epics-config/BUILD/support
+
+SNCSEQ=$(SUPPORT)/seq
+
+CALC=$(SUPPORT)/calc
+
+BUSY=$(SUPPORT)/busy
+
+ASYN=$(SUPPORT)/asyn
+
+#EPICS_BASE=/home/oxygen/MOONEY/epics/base-3.15.4
+EPICS_BASE=/epics/utils/rhel8-epics-config/BUILD/base
+```
+
+Finally, we simply build with make
+
+```
+make -s
+```
+
+If this completes successfully, we can proceed to adding the module to the configuration permanently. Open the `INSTALL_CONFIG` file in the root of this repository. If the URL from which the module is pulled is already listed, add a line containing your module's information under it, in the same structure as the remaining modules. Otherwise, add a new URL and add your module's line under it. If it is a git repository, use `GIT_URL` otherwise, use `WGET_URL`.
+
+For our `optics` example, it is under the `https://github.com/epics-modules` github org, which is already listed in the config file with `GIT_URL=https://github.com/epics-modules`. Under this we will add the following line:
+
+```
+OPTICS           R2-13-5              $(SUPPORT)/optics                        optics                   YES              YES              YES
+```
+
+The first item is the module name (this must be unique). Then the module version that will be checked out, then the module location in the build folder structure, then the module repository name, and finally the three binary options are whether we want to clone, build, and package the module respectively. In most cases these should all be `YES` aside from very specific cases where a module will install build artifacts into the output directories of another module (see `epics-extensions` as an example)
+
+
+Once you have added the module to the install config, re-run the build script as above and make sure your module builds automatically successfully.
+
+```
+make clean
+make localinstall
+```
+
+Note that only the top level `lib`, `bin`, `protocol`, `pmc`, `db`, `dbd`, and `include` folders will be included in the installation, so make sure your module installs any required build artifacts to their proper locations.
+
+Once you have confirmed that the builds succeeds, the final step involves editing the rpm specfile to account for the change. Open `rpmbuild/epics-bundle.spec`, and make the following changes: 
+
+* Change the `Release` number to one greater than the current value
+* Add an entry to the changelog that accounts for the additional module. Make sure the version number listed in the changelog matches the one you edited in the previous step. In our example `optics` case:
+
+```
+* Tue May 18 2021 Jakub Wlodek <jwlodek@bnl.gov> - 0.1-5
+- Adding optics module 
+```
+
+Now, you may want to generate an RPM that includes your new module to make sure it behaves as expected.
+
+```
+make clean
+make rpm
+```
+
+Finally, once all of this is done, make a commit to your branch, push to your fork of `rhel8-epics-config`, and make a merge request with the master branch of the main repo. This will be reviewed and merged, and a new version of the RPM will be generated from the updated configuration
