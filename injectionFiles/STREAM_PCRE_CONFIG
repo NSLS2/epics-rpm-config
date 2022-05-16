@@ -1,0 +1,4 @@
+__TARGET_LOC__=$(STREAM)/configure/RELEASE.local
+
+PCRE_INCLUDE=/usr/include/pcre
+PCRE_LIB=/usr/lib64

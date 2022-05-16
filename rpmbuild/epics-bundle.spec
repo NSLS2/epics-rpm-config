@@ -1,6 +1,6 @@
 Name:           epics-bundle
 Version:        0.1
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD
@@ -68,6 +68,9 @@ chmod u+w -R %{buildroot}
 #/lib64/*
 
 %changelog
+* Fri May 13 2022 Jakub Wlodek <jwlodek@bnl.gov> - 0.1-8
+- Enable StreamDevice PCRE support
+  
 * Fri Mar 04 2022 Jakub Wlodek <jwlodek@bnl.gov> - 0.1-7
 - Include autosave and areaDetector common iocBoot files
 
