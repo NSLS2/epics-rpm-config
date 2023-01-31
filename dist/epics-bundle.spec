@@ -7,7 +7,14 @@ License:        BSD
 URL:            https://code.nsls2.bnl.gov/epics-modules-nsls2/rhel8-epics-config
 #Source0:        %{name}-%{version}.tar.gz
 
-BuildRequires:  python3 boost-devel cmake g++ gcc gcc-c++ giflib-devel git libboost-dev libboost-system-dev libboost-test-dev libdmtx-dev libjpeg-devel libopencv-dev libpcre3-dev libraw1394 libreadline-dev libtirpc-devel libusb-1.0-0-dev libusb-dev libusb-devel libusbx-devel libx11-dev libxext-dev libXext-devel libxml2-dev libxml2-devel libXt-devel libXtst-devel libzbar-dev make motif-devel net-snmp-devel pcre-devel perl-devel pkgconfig re2c readline-devel rpcgen tar wget zeromq-devel
+BuildRequires:  python3 boost-devel cmake g++ gcc gcc-c++ giflib-devel git
+BuildRequires:  libboost-dev libboost-system-dev libboost-test-dev libdmtx-dev
+BuildRequires:  libjpeg-devel libopencv-dev libpcre3-dev libraw1394
+BuildRequires:  libreadline-dev libtirpc-devel libusb-1.0-0-dev libusb-dev
+BuildRequires:  libusb-devel libusbx-devel libx11-dev libxext-dev libXext-devel
+BuildRequires:  libxml2-dev libxml2-devel libXt-devel libXtst-devel libzbar-dev
+BuildRequires:  make motif-devel net-snmp-devel pcre-devel perl-devel pkgconfig
+BuildRequires:  re2c readline-devel rpcgen tar wget zeromq-devel
 Requires:       bash
 
 BuildArch:      x86_64
