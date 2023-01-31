@@ -1,6 +1,6 @@
 Name:           epics-bundle
 Version:        0.1
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD
@@ -11,7 +11,7 @@ Patch0:         makeBaseApp-basepath.patch
 Patch1:         disable-debug.patch
 
 # TODO: actually populate proper dependencies
-BuildRequires:  python3
+BuildRequires:  python3 boost-devel cmake g++ gcc gcc-c++ giflib-devel git libboost-dev libboost-system-dev libboost-test-dev libdmtx-dev libjpeg-devel libopencv-dev libpcre3-dev libraw1394 libreadline-dev libtirpc-devel libusb-1.0-0-dev libusb-dev libusb-devel libusbx-devel libx11-dev libxext-dev libXext-devel libxml2-dev libxml2-devel libXt-devel libXtst-devel libzbar-dev make motif-devel net-snmp-devel pcre-devel perl-devel pkgconfig re2c readline-devel rpcgen tar wget zeromq-devel
 Requires:       bash
 
 BuildArch:      x86_64
@@ -68,12 +68,15 @@ chmod u+w -R %{buildroot}
 #/lib64/*
 
 %changelog
+* Tue Jan 31 2023 Derbenev, Anton <aderbenev@bnl.gov> - 0.1-8
+- Update Requires and BuildRequires
+
 * Fri Mar 04 2022 Jakub Wlodek <jwlodek@bnl.gov> - 0.1-7
 - Include autosave and areaDetector common iocBoot files
 
 * Fri Jun 25 2021 Jakub Wlodek <jwlodek@bnl.gov> - 0.1-6
 - Adding ezca and EzcaScan extension modules
-  
+
 * Tue May 18 2021 Jakub Wlodek <jwlodek@bnl.gov> - 0.1-5
 - Adding optics module
 
