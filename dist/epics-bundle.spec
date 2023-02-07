@@ -1,6 +1,6 @@
 Name:           epics-bundle
 Version:        7.0.5_0.0.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD
@@ -82,14 +82,19 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 # %%make_install
 
 %files
-%dir /usr/lib/epics
-/usr/lib/epics/*
+%dir /usr/lib64/epics
+%dir /usr/lib
+/usr/lib64/epics/*
+/usr/lib/epics
 /usr/bin/*
 /etc/ld.so.conf.d/*
 # Use lib64 instead of lib - TBD
 #/lib64/*
 
 %changelog
+* Tue Feb 07 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-5
+- Fixed the previously forgotten files section
+
 * Tue Feb 07 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-4
 - Change install location to lib64, now creating a symlink from lib
 
