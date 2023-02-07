@@ -1,6 +1,6 @@
 Name:           epics-bundle
 Version:        7.0.5_0.0.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD
@@ -61,10 +61,10 @@ export QA_RPATHS=$[ 0x0001 | 0x0002 ]
 # Clean up any old stuff
 rm -rf %{buildroot}
 
-# Populate /usr/lib/epics
-mkdir -p %{buildroot}/usr/lib/epics
+# Populate /usr/lib64/epics
+mkdir -p %{buildroot}/usr/lib64/epics
 #cd %{_topdir}/INSTALL/epics
-cp -r %{_topdir}/INSTALL/epics/* %{buildroot}/usr/lib/epics/.
+cp -r %{_topdir}/INSTALL/epics/* %{buildroot}/usr/lib64/epics/.
 
 # Drop select binaries in /usr/bin
 mkdir -p %{buildroot}/usr/bin
@@ -73,11 +73,11 @@ cp %{_topdir}/INSTALL/epics/bin/linux-x86_64/makeBaseApp.pl %{buildroot}/usr/bin
 
 # Drop ld.so.conf file to point at EPICS libs
 mkdir -p %{buildroot}/etc/ld.so.conf.d
-cp %{_builddir}/%{name}-%{version}/dist/epics-bundle.conf %{buildroot}/etc/ld.so.conf.d/.
+cp %{_builddir}/%{name}-%{version}/dist/epics-bundle-x86_64.conf %{buildroot}/etc/ld.so.conf.d/.
 
-# Use lib64 instead of lib - TBD
-#mkdir -p %{buildroot}/lib64
-#cp ./install/epics/lib/linux-x86_64/lib*.so* %{buildroot}/lib64/
+# Create a symlink: /usr/lib/epics -> /usr/lib64/epics
+mkdir -p %{buildroot}/usr/lib
+ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 
 # %%make_install
 
@@ -90,6 +90,9 @@ cp %{_builddir}/%{name}-%{version}/dist/epics-bundle.conf %{buildroot}/etc/ld.so
 #/lib64/*
 
 %changelog
+* Tue Feb 07 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-4
+- Change install location to lib64, now creating a symlink from lib
+
 * Tue Feb 07 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-3
 - Moved chmod fix in the build section, added more comments
 
