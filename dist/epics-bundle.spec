@@ -1,10 +1,10 @@
 Name:           epics-bundle
 Version:        7.0.5_0.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD
-URL:            https://code.nsls2.bnl.gov/epics-modules-nsls2/rhel8-epics-config
+URL:            https://github.com/NSLS2/rhel8-epics-config
 Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires:  python3 boost-devel cmake gcc gcc-c++ giflib-devel git
@@ -31,18 +31,20 @@ EPICS base and modules bundle packaged as RPM.
 %autosetup
 
 %build
+# This starts in rpmbuildtree/BUILD/epics-bundle-...
 # %%configure
 # %%make_build
-if [ ! -d ../../INSTALL/epics ]; then
+if [ ! -d %{_topdir}/INSTALL/epics ]; then
     mkdir -p %{_topdir}/INSTALL
-    cp -r %{_topdir}/../installSynApps/* installSynApps/.
-    cd installSynApps
+    # Handle the submodule which is not included by git archive
+    cp -r %{_topdir}/../installSynApps/* %{_builddir}/%{name}-%{version}/installSynApps/.
+    cd %{_builddir}/%{name}-%{version}/installSynApps
     python3 -u installCLI.py -y -c .. -b %{_builddir} -i %{_topdir}/INSTALL -p -f
     cd %{_topdir}/INSTALL
     mv EPICS_* epics
     cd epics
-    patch -p1 < %{_sourcedir}/dist/makeBaseApp-basepath.patch
-    patch -p1 < %{_sourcedir}/dist/disable-debug.patch
+    patch -p1 < %{_builddir}/%{name}-%{version}/dist/makeBaseApp-basepath.patch
+    patch -p1 < %{_builddir}/%{name}-%{version}/dist/disable-debug.patch
 fi
 
 %install
@@ -56,7 +58,7 @@ mkdir -p %{buildroot}/usr/bin
 cp %{_topdir}/INSTALL/epics/bin/linux-x86_64/{caget,cainfo,camonitor,caput,caRepeater,casw,pvget,pvinfo,pvmonitor,pvput,pvlist,edm,medm,msi} %{buildroot}/usr/bin/
 cp %{_topdir}/INSTALL/epics/bin/linux-x86_64/makeBaseApp.pl %{buildroot}/usr/bin/makeBaseApp
 mkdir -p %{buildroot}/etc/ld.so.conf.d
-cp %{_sourcedir}/dist/epics-bundle.conf %{buildroot}/etc/ld.so.conf.d/.
+cp %{_builddir}/%{name}-%{version}/dist/epics-bundle.conf %{buildroot}/etc/ld.so.conf.d/.
 #mkdir -p %{buildroot}/lib64
 #cp ./install/epics/lib/linux-x86_64/lib*.so* %{buildroot}/lib64/
 chmod u+w -R %{buildroot}
@@ -71,6 +73,12 @@ chmod u+w -R %{buildroot}
 #/lib64/*
 
 %changelog
+* Tue Feb 07 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-2
+- Updated URL
+- Fixed wrong paths, added few comments
+- Now using macroed paths instead of relative ones for clarity
+- Now using builddir for patch and conf files
+
 * Tue Jan 31 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-1
 - Updated install and build sections for git-rpm-tools compatibility
 - Changed the version number to follow the new scheme
