@@ -1,6 +1,6 @@
 Name:           epics-bundle
 Version:        7.0.5_0.0.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD
@@ -30,38 +30,54 @@ EPICS base and modules bundle packaged as RPM.
 %prep
 %autosetup
 
-%build
 # This starts in rpmbuildtree/BUILD/epics-bundle-...
+%build
 # %%configure
 # %%make_build
 if [ ! -d %{_topdir}/INSTALL/epics ]; then
     mkdir -p %{_topdir}/INSTALL
+
     # Handle the submodule which is not included by git archive
     cp -r %{_topdir}/../installSynApps/* %{_builddir}/%{name}-%{version}/installSynApps/.
+
     cd %{_builddir}/%{name}-%{version}/installSynApps
     python3 -u installCLI.py -y -c .. -b %{_builddir} -i %{_topdir}/INSTALL -p -f
+
     cd %{_topdir}/INSTALL
     mv EPICS_* epics
     cd epics
     patch -p1 < %{_builddir}/%{name}-%{version}/dist/makeBaseApp-basepath.patch
     patch -p1 < %{_builddir}/%{name}-%{version}/dist/disable-debug.patch
+
+    # Blanket-fix any missing permissions
+    chmod u+w -R %{_topdir}/INSTALL
 fi
 
+# This starts in rpmbuildtree/BUILDROOT
 %install
 # Ignore invalid rpaths in EPICS build
 export QA_RPATHS=$[ 0x0001 | 0x0002 ]
+
+# Clean up any old stuff
 rm -rf %{buildroot}
+
+# Populate /usr/lib/epics
 mkdir -p %{buildroot}/usr/lib/epics
-cd %{_topdir}/INSTALL/epics
+#cd %{_topdir}/INSTALL/epics
 cp -r %{_topdir}/INSTALL/epics/* %{buildroot}/usr/lib/epics/.
+
+# Drop select binaries in /usr/bin
 mkdir -p %{buildroot}/usr/bin
 cp %{_topdir}/INSTALL/epics/bin/linux-x86_64/{caget,cainfo,camonitor,caput,caRepeater,casw,pvget,pvinfo,pvmonitor,pvput,pvlist,edm,medm,msi} %{buildroot}/usr/bin/
 cp %{_topdir}/INSTALL/epics/bin/linux-x86_64/makeBaseApp.pl %{buildroot}/usr/bin/makeBaseApp
+
+# Drop ld.so.conf file to point at EPICS libs
 mkdir -p %{buildroot}/etc/ld.so.conf.d
 cp %{_builddir}/%{name}-%{version}/dist/epics-bundle.conf %{buildroot}/etc/ld.so.conf.d/.
+
+# Use lib64 instead of lib - TBD
 #mkdir -p %{buildroot}/lib64
 #cp ./install/epics/lib/linux-x86_64/lib*.so* %{buildroot}/lib64/
-chmod u+w -R %{buildroot}
 
 # %%make_install
 
@@ -70,9 +86,13 @@ chmod u+w -R %{buildroot}
 /usr/lib/epics/*
 /usr/bin/*
 /etc/ld.so.conf.d/*
+# Use lib64 instead of lib - TBD
 #/lib64/*
 
 %changelog
+* Tue Feb 07 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-3
+- Moved chmod fix in the build section, added more comments
+
 * Tue Feb 07 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-2
 - Updated URL
 - Fixed wrong paths, added few comments
