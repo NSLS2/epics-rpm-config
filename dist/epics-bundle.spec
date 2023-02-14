@@ -1,6 +1,6 @@
 Name:           epics-bundle
 Version:        7.0.5_0.0.0
-Release:        5%{?dist}
+Release:        1%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD
@@ -68,8 +68,8 @@ cp -r %{_topdir}/INSTALL/epics/* %{buildroot}/usr/lib64/epics/.
 
 # Drop select binaries in /usr/bin
 mkdir -p %{buildroot}/usr/bin
-cp %{_topdir}/INSTALL/epics/bin/linux-x86_64/{caget,cainfo,camonitor,caput,caRepeater,casw,pvget,pvinfo,pvmonitor,pvput,pvlist,edm,medm,msi} %{buildroot}/usr/bin/
-cp %{_topdir}/INSTALL/epics/bin/linux-x86_64/makeBaseApp.pl %{buildroot}/usr/bin/makeBaseApp
+install %{_topdir}/INSTALL/epics/bin/linux-x86_64/{caget,cainfo,camonitor,caput,caRepeater,casw,pvget,pvinfo,pvmonitor,pvput,pvlist,edm,medm,msi} %{buildroot}/usr/bin/
+install %{_topdir}/INSTALL/epics/bin/linux-x86_64/makeBaseApp.pl %{buildroot}/usr/bin/makeBaseApp
 
 # Drop ld.so.conf file to point at EPICS libs
 mkdir -p %{buildroot}/etc/ld.so.conf.d
@@ -92,22 +92,17 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 #/lib64/*
 
 %changelog
-* Tue Feb 07 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-5
+* Tue Feb 14 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-1
+- Squashed revision bumpspecs
+- Now using install for executables, not cp
+- Makefile reviewed for git-mrt-tools compatibility
 - Fixed the previously forgotten files section
-
-* Tue Feb 07 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-4
 - Change install location to lib64, now creating a symlink from lib
-
-* Tue Feb 07 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-3
 - Moved chmod fix in the build section, added more comments
-
-* Tue Feb 07 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-2
 - Updated URL
 - Fixed wrong paths, added few comments
 - Now using macroed paths instead of relative ones for clarity
 - Now using builddir for patch and conf files
-
-* Tue Jan 31 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-1
 - Updated install and build sections for git-rpm-tools compatibility
 - Changed the version number to follow the new scheme
 
