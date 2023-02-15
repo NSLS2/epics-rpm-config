@@ -5,3 +5,4 @@ RESULT/
 *.rpm
 install/
 *.swp
+rpmbuildtree/
