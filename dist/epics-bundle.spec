@@ -8,12 +8,11 @@ URL:            https://github.com/NSLS2/rhel8-epics-config
 Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires:  python3 boost-devel cmake gcc gcc-c++ giflib-devel git
-BuildRequires:  libjpeg-turbo-devel libraw1394 libtirpc-devel
-BuildRequires:  libusb-devel libusbx-devel libXext-devel
-BuildRequires:  libxml2-devel libXt-devel libXtst-devel
+BuildRequires:  libraw1394 libtirpc-devel libusb-devel libusbx-devel
+BuildRequires:  libXext-devel libxml2-devel libXt-devel libXtst-devel
 BuildRequires:  make motif-devel net-snmp-devel pcre-devel perl-devel
 BuildRequires:  pkgconf re2c readline-devel rpcgen tar wget zeromq-devel
-Requires:       bash boost giflib libjpeg-turbo libraw1394 libtirpc
+Requires:       bash boost giflib libraw1394 libtirpc
 Requires:       libusb libusbx libXext libxml2 libXt libXtst
 Requires:       motif net-snmp-libs pcre perl re2c readline rpcgen zeromq
 
@@ -93,7 +92,8 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 #/lib64/*
 
 %changelog
-* Tue Feb 14 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-1
+* Wed Feb 15 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-1
+- Removed jpeg libs, no longer needed after ADUVC driver rework
 - Squashed revision bumpspecs
 - Now using install for executables, not cp
 - Makefile reviewed for git-mrt-tools compatibility
