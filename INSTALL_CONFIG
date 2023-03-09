@@ -110,3 +110,12 @@ ADDEXELA         R2-3                 $(AREA_DETECTOR)/ADDexela                A
 ADMYTHEN         master               $(AREA_DETECTOR)/ADMythen                ADMythen                 YES              YES              YES
 ADURL            master               $(AREA_DETECTOR)/ADURL                   ADURL                    YES              YES              YES
 ADUVC            R1-6                 $(AREA_DETECTOR)/ADUVC                   ADUVC                    YES              YES              YES
+
+GIT_URL=https://github.com/cosylab/
+
+ADSDRIVER        v3.0.0               $(SUPPORT)/adsDriver                     adsDriver                YES              YES              YES
+AUTOPARAM        v1.0.0               $(SUPPORT)/autoparamDriver               autoparamDriver          YES              YES              YES
+
+GIT_URL=https://github.com/Beckhoff/ADS
+
+ADSBECKHOFF      v17                  $(ADSDRIVER)/adsApp/src/beckhoffAdsLib   ADS                      YES              NO               NO
