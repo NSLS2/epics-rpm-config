@@ -1,9 +1,9 @@
 Name:           epics-bundle
 Version:        7.0.5_0.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        EPICS Base and Modules bundle
 
-License:        BSD
+License:        BSD-3-Clause
 URL:            https://github.com/NSLS2/rhel8-epics-config
 Source0:        %{name}-%{version}.tar.gz
 
@@ -12,6 +12,7 @@ BuildRequires:  libraw1394 libtirpc-devel libusb-devel libusbx-devel
 BuildRequires:  libXext-devel libxml2-devel libXt-devel libXtst-devel
 BuildRequires:  make motif-devel net-snmp-devel pcre-devel perl-devel
 BuildRequires:  pkgconf re2c readline-devel rpcgen tar wget zeromq-devel
+BuildRequires:  git-rpm-tools
 Requires:       bash boost giflib libraw1394 libtirpc
 Requires:       libusb libusbx libXext libxml2 libXt libXtst
 Requires:       motif net-snmp-libs pcre perl re2c readline rpcgen zeromq
@@ -92,6 +93,10 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 #/lib64/*
 
 %changelog
+* Tue Apr 04 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-2
+- Added git-rpm-tools in BuildRequires as the Makefile uses it
+- Added LICENSE and adjusted .spec for it
+
 * Wed Feb 15 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-1
 - Removed jpeg libs, no longer needed after ADUVC driver rework
 - Squashed revision bumpspecs
