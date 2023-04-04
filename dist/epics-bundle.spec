@@ -11,11 +11,11 @@ BuildRequires:  python3 boost-devel cmake gcc gcc-c++ giflib-devel git
 BuildRequires:  libraw1394 libtirpc-devel libusb-devel libusbx-devel
 BuildRequires:  libXext-devel libxml2-devel libXt-devel libXtst-devel
 BuildRequires:  make motif-devel net-snmp-devel pcre-devel perl-devel
-BuildRequires:  pkgconf re2c readline-devel rpcgen tar wget zeromq-devel
+BuildRequires:  pkgconf re2c readline-devel rpcgen tar wget zeromq-devel xz-devel opencv-devel
 BuildRequires:  git-rpm-tools
 Requires:       bash boost giflib libraw1394 libtirpc
-Requires:       libusb libusbx libXext libxml2 libXt libXtst
-Requires:       motif net-snmp-libs pcre perl re2c readline rpcgen zeromq
+Requires:       libusb libusbx libXext libxml2 libXt libXtst 
+Requires:       motif net-snmp-libs pcre perl re2c readline rpcgen zeromq xz-devel opencv-devel
 
 BuildArch:      x86_64
 

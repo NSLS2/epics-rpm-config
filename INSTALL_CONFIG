@@ -87,6 +87,8 @@ GIT_URL=https://github.com/areaDetector/
 AREA_DETECTOR    R3-12-1              $(SUPPORT)/areaDetector                  areaDetector             YES              YES              NO
 ADSUPPORT        R1-10                $(AREA_DETECTOR)/ADSupport               ADSupport                YES              YES              YES
 ADCORE           R3-12-1              $(AREA_DETECTOR)/ADCore                  ADCore                   YES              YES              YES
+FFMPEGSERVER     master               $(AREA_DETECTOR)/ffmpegServer            ffmpegServer             YES              YES              YES
+ADCOMPVISION     
 ADGENICAM        master               $(AREA_DETECTOR)/ADGenICam               ADGenICam                YES              YES              YES
 ADANDOR3         master               $(AREA_DETECTOR)/ADAndor3                ADAndor3                 YES              YES              YES
 ADPROSILICA      R2-5                 $(AREA_DETECTOR)/ADProsilica             ADProsilica              YES              YES              YES
