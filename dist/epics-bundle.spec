@@ -47,11 +47,13 @@ if [ ! -d %{_topdir}/INSTALL/epics ]; then
     cd %{_topdir}/INSTALL
     mv EPICS_* epics
     cd epics
+    
+    # Blanket-fix any missing permissions
+    chmod u+w -R %{_topdir}/INSTALL
+    
     patch -p1 < %{_builddir}/%{name}-%{version}/dist/makeBaseApp-basepath.patch
     patch -p1 < %{_builddir}/%{name}-%{version}/dist/disable-debug.patch
 
-    # Blanket-fix any missing permissions
-    chmod u+w -R %{_topdir}/INSTALL
 fi
 
 # This starts in rpmbuildtree/BUILDROOT
