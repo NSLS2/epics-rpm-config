@@ -34,3 +34,5 @@ make -sj
 
 rm vendor/ffmpeg-linux-x86_64/src
 cp -r vendor/ffmpeg vendor/ffmpeg-linux-x86_64/src
+
+cp -r lib/linux-x86_64 lib/linux-x86_64-debug
