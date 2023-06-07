@@ -33,8 +33,6 @@ DEVIOCSTATS      master               $(SUPPORT)/iocStats                      i
 SCALER           master               $(SUPPORT)/scaler                        scaler                   YES              YES              YES
 SSCAN            R2-11-5              $(SUPPORT)/sscan                         sscan                    YES              YES              YES
 IPUNIDIG         R2-12                $(SUPPORT)/ipUnidig                      ipUnidig                 YES              YES              YES
-XSPRESS3         master               $(SUPPORT)/xspress3                      xspress3                 YES              YES              YES
-QUADEM           R9-4                 $(SUPPORT)/quadEM                        quadEM                   YES              YES              YES
 CAPUTLOG         R4.0                 $(SUPPORT)/caPutLog                      caPutLog                 YES              YES              YES
 STD              R3-6-3               $(SUPPORT)/std                           std                      YES              YES              YES
 MCA              R7-10                $(SUPPORT)/mca                           mca                      YES              YES              YES
@@ -112,3 +110,8 @@ AUTOPARAM        v1.0.0               $(SUPPORT)/autoparamDriver               a
 GIT_URL=https://github.com/Beckhoff/
 
 ADSBECKHOFF      v17                  $(ADSDRIVER)/adsApp/src/beckhoffAdsLib   ADS                      YES              NO               NO
+
+GIT_URL=https://github.com/epics-modules/
+
+XSPRESS3         master               $(SUPPORT)/xspress3                      xspress3                 YES              YES              YES
+QUADEM           R9-4                 $(SUPPORT)/quadEM                        quadEM                   YES              YES              YES
