@@ -42,7 +42,7 @@ IP               R2-21-1              $(SUPPORT)/ip                            i
 DELAYGEN         R1-2-3               $(SUPPORT)/delaygen                      delaygen                 YES              YES              YES
 MODBUS           R3-2                 $(SUPPORT)/modbus                        modbus                   YES              YES              YES
 LUA              R3-0-2               $(SUPPORT)/lua                           lua                      YES              YES              YES
-MOTOR            R7-2-2               $(SUPPORT)/motor                         motor                    YES              YES              YES
+MOTOR            R7-3                 $(SUPPORT)/motor                         motor                    YES              YES              YES
 TPMAC            master               $(SUPPORT)/tpmac                         tpmac                    YES              YES              YES
 CAMAC            R2-7-4               $(SUPPORT)/camac                         camac                    YES              YES              YES
 OPTICS           R2-13-5              $(SUPPORT)/optics                        optics                   YES              YES              YES
