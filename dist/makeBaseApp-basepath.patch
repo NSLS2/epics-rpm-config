@@ -1,11 +1,11 @@
---- ./bin/linux-x86_64/makeBaseApp.pl	2023-06-09 11:49:17.684605861 -0400
-+++ ./bin/linux-x86_64/makeBaseApp.pl	2023-06-09 11:46:45.701607057 -0400
+--- ./bin/linux-x86_64/makeBaseApp.pl	2023-06-09 11:49:17.684605861 -0440
++++ ./bin/linux-x86_64/makeBaseApp.pl	2023-06-09 11:46:45.701607057 -0440
 @@ -3,7 +3,7 @@
  # Authors: Ralph Lange, Marty Kraimer, Andrew Johnson and Janet Anderson
  
  use FindBin qw($RealBin);
--use lib ("/usr/lib/epics/lib/perl");
-+use lib ("$RealBin/../../lib/perl");
+-use lib ("$RealBin/../../lib/perl");
++use lib ("/usr/lib/epics/lib/perl");
  
  use Cwd;
  use Getopt::Std;
@@ -13,8 +13,8 @@
              } elsif (-r "$base\@Common") {	# Default version exists
                  $base = '' unless ($filearch eq "Common" && -s $file);
              } else {			# No default version
--                $base = '/usr/lib/epics';
-+                $base = '';
+-                $base = '';
++                $base = '/usr/lib/epics';
              }
              $file = $base;	# Strip the @... part from the target name
          }
@@ -22,8 +22,8 @@
      } elsif ($ENV{EPICS_MBA_BASE}) { # third choice is env var EPICS_MBA_BASE
          $epics_base = UnixPath($ENV{EPICS_MBA_BASE});
      } elsif ($command =~ m|/bin/|) { # assume script was run with full path to base
--        $epics_base = "/usr/lib/epics";
-+        $epics_base = $command;
+-        $epics_base = $command;
++        $epics_base = "/usr/lib/epics";
          $epics_base =~ s|^(.*)/bin/.*makeBaseApp.*|$1|;
      }
      $epics_base and -d "$epics_base" or Cleanup(1, "Can't find EPICS base");
