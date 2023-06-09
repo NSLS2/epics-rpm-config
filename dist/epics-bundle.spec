@@ -1,6 +1,6 @@
 Name:           epics-bundle
-Version:        7.0.5_0.0.0
-Release:        2%{?dist}
+Version:        7.0.7_0.0.0
+Release:        1%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD-3-Clause
@@ -95,6 +95,12 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 #/lib64/*
 
 %changelog
+* Fri Jun 09 2023 Wlodek, Jakub <jwlodek@bnl.gov> - 7.0.7_0.0.0-1
+- Bump versions of all modules in release
+- Add several additional new modules
+- Include OpenCV and ffmpegServer plugins for areaDetector drivers
+- Include areaDetector startup files
+
 * Tue Apr 04 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-2
 - Added git-rpm-tools in BuildRequires as the Makefile uses it
 - Added LICENSE and adjusted .spec for it
