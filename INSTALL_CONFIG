@@ -18,9 +18,9 @@ SUPPORT          R6-2-1               $(INSTALL)/support                       s
 CONFIGURE        R6-2                 $(SUPPORT)/configure                     configure                YES              YES              NO
 UTILS            R6-2                 $(SUPPORT)/utils                         utils                    YES              YES              NO
 
-WGET_URL=https://www-csr.bessy.de/control/SoftDist/sequencer/releases/
+GIT_URL=https://github.com/mdavidsaver/
 
-SNCSEQ           2.2.8                $(SUPPORT)/seq                           seq-2.2.8.tar.gz         YES              YES              YES
+SNCSEQ           R2-2-8               $(SUPPORT)/seq                           sequencer-mirror         YES              YES              YES
 
 GIT_URL=https://github.com/epics-modules/
 
