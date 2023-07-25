@@ -95,6 +95,7 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 * Tue Jul 25 2023 Maytan, Nathanael <nmaytan@bnl.gov> - 7.0.7_0.0.1-1
 - Switch to mdavidsaver mirror of sequencer
 - Fix /usr/lib directive in specfile
+- Pin ADSpinnaker to R3-3 due to R3-4 gcc11 dependency
 
 * Fri Jun 09 2023 Wlodek, Jakub <jwlodek@bnl.gov> - 7.0.7_0.0.0-1
 - Bump versions of all modules in release

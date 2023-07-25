@@ -96,7 +96,7 @@ ADMERLIN         master               $(AREA_DETECTOR)/ADMerlin                A
 ADEIGER          R3-4                 $(AREA_DETECTOR)/ADEiger                 ADEiger                  YES              YES              YES
 ADVIMBA          master               $(AREA_DETECTOR)/ADVimba                 ADVimba                  YES              YES              YES
 ADPOINTGREY      master               $(AREA_DETECTOR)/ADPointGrey             ADPointGrey              YES              YES              YES
-ADSPINNAKER      master               $(AREA_DETECTOR)/ADSpinnaker             ADSpinnaker              YES              YES              YES
+ADSPINNAKER      R3-3                 $(AREA_DETECTOR)/ADSpinnaker             ADSpinnaker              YES              YES              YES
 ADANDOR          R2-8                 $(AREA_DETECTOR)/ADAndor                 ADAndor                  YES              YES              YES
 ADMYTHEN         master               $(AREA_DETECTOR)/ADMythen                ADMythen                 YES              YES              YES
 ADURL            master               $(AREA_DETECTOR)/ADURL                   ADURL                    YES              YES              YES
