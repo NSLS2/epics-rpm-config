@@ -1,5 +1,5 @@
 Name:           epics-bundle
-Version:        7.0.7_0.0.0
+Version:        7.0.7_0.0.1
 Release:        1%{?dist}
 Summary:        EPICS Base and Modules bundle
 
@@ -86,15 +86,16 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 
 %files
 %dir /usr/lib64/epics
-%dir /usr/lib
 /usr/lib64/epics/*
 /usr/lib/epics
 /usr/bin/*
 /etc/ld.so.conf.d/*
-# Use lib64 instead of lib - TBD
-#/lib64/*
 
 %changelog
+* Tue Jul 25 2023 Maytan, Nathanael <nmaytan@bnl.gov> - 7.0.7_0.0.1-1
+- Switch to mdavidsaver mirror of sequencer
+- Fix /usr/lib directive in specfile
+
 * Fri Jun 09 2023 Wlodek, Jakub <jwlodek@bnl.gov> - 7.0.7_0.0.0-1
 - Bump versions of all modules in release
 - Add several additional new modules
