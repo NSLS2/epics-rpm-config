@@ -113,5 +113,5 @@ ADSBECKHOFF      v17                  $(ADSDRIVER)/adsApp/src/beckhoffAdsLib   A
 
 GIT_URL=https://github.com/epics-modules/
 
-XSPRESS3         master               $(SUPPORT)/xspress3                      xspress3                 YES              YES              YES
+XSPRESS3         0e8eb4ba             $(SUPPORT)/xspress3                      xspress3                 YES              YES              YES
 QUADEM           R9-4                 $(SUPPORT)/quadEM                        quadEM                   YES              YES              YES
