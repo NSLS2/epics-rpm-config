@@ -21,3 +21,9 @@ dnf -y install zeromq-devel
 # Needed for edm
 dnf -y install giflib-devel libXtst-devel
 
+# Needed for ADCompVision
+dnf -y install opencv-devel
+
+# Needed for ffmpegServer
+dnf -y install xz-devel
+
