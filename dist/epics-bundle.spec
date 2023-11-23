@@ -1,6 +1,6 @@
 Name:           epics-bundle
-Version:        7.0.5_0.0.0
-Release:        2%{?dist}
+Version:        7.0.7_0.0.1
+Release:        1%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD-3-Clause
@@ -11,11 +11,11 @@ BuildRequires:  python3 boost-devel cmake gcc gcc-c++ giflib-devel git
 BuildRequires:  libraw1394 libtirpc-devel libusb-devel libusbx-devel
 BuildRequires:  libXext-devel libxml2-devel libXt-devel libXtst-devel
 BuildRequires:  make motif-devel net-snmp-devel pcre-devel perl-devel
-BuildRequires:  pkgconf re2c readline-devel rpcgen tar wget zeromq-devel
+BuildRequires:  pkgconf re2c readline-devel rpcgen tar wget zeromq-devel xz-devel opencv-devel
 BuildRequires:  git-rpm-tools
 Requires:       bash boost giflib libraw1394 libtirpc
-Requires:       libusb libusbx libXext libxml2 libXt libXtst
-Requires:       motif net-snmp-libs pcre perl re2c readline rpcgen zeromq
+Requires:       libusb libusbx libXext libxml2 libXt libXtst 
+Requires:       motif net-snmp-libs pcre perl re2c readline rpcgen zeromq xz-devel opencv-devel
 
 BuildArch:      x86_64
 
@@ -47,11 +47,13 @@ if [ ! -d %{_topdir}/INSTALL/epics ]; then
     cd %{_topdir}/INSTALL
     mv EPICS_* epics
     cd epics
+    
+    # Blanket-fix any missing permissions
+    chmod u+w -R %{_topdir}/INSTALL
+    
     patch -p1 < %{_builddir}/%{name}-%{version}/dist/makeBaseApp-basepath.patch
     patch -p1 < %{_builddir}/%{name}-%{version}/dist/disable-debug.patch
 
-    # Blanket-fix any missing permissions
-    chmod u+w -R %{_topdir}/INSTALL
 fi
 
 # This starts in rpmbuildtree/BUILDROOT
@@ -84,15 +86,23 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 
 %files
 %dir /usr/lib64/epics
-%dir /usr/lib
 /usr/lib64/epics/*
 /usr/lib/epics
 /usr/bin/*
 /etc/ld.so.conf.d/*
-# Use lib64 instead of lib - TBD
-#/lib64/*
 
 %changelog
+* Tue Jul 25 2023 Maytan, Nathanael <nmaytan@bnl.gov> - 7.0.7_0.0.1-1
+- Switch to mdavidsaver mirror of sequencer
+- Fix /usr/lib directive in specfile
+- Pin ADSpinnaker to R3-3 due to R3-4 gcc11 dependency
+
+* Fri Jun 09 2023 Wlodek, Jakub <jwlodek@bnl.gov> - 7.0.7_0.0.0-1
+- Bump versions of all modules in release
+- Add several additional new modules
+- Include OpenCV and ffmpegServer plugins for areaDetector drivers
+- Include areaDetector startup files
+
 * Tue Apr 04 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-2
 - Added git-rpm-tools in BuildRequires as the Makefile uses it
 - Added LICENSE and adjusted .spec for it
