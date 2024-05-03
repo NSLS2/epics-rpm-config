@@ -18,10 +18,6 @@ SUPPORT          R6-2                 $(INSTALL)/support                       s
 CONFIGURE        R6-2                 $(SUPPORT)/configure                     configure                YES              YES              NO
 UTILS            R6-2                 $(SUPPORT)/utils                         utils                    YES              YES              NO
 
-WGET_URL=https://www-csr.bessy.de/control/SoftDist/sequencer/releases/
-
-SNCSEQ           2.2.8                $(SUPPORT)/seq                           seq-2.2.8.tar.gz         YES              YES              YES
-
 GIT_URL=https://github.com/epics-modules/
 
 IPAC             2.16                 $(SUPPORT)/ipac                          ipac                     YES              YES              YES
@@ -46,6 +42,7 @@ MOTOR            R7-2-2               $(SUPPORT)/motor                         m
 TPMAC            master               $(SUPPORT)/tpmac                         tpmac                    YES              YES              YES
 CAMAC            R2-7-3               $(SUPPORT)/camac                         camac                    YES              YES              YES
 OPTICS           R2-13-5              $(SUPPORT)/optics                        optics                   YES              YES              YES
+SNCSEQ           2.2.8                $(SUPPORT)/sequencer                     sequencer                YES              YES              YES
 
 GIT_URL=https://code.nsls2.bnl.gov/epics-modules-nsls2/
 
