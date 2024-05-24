@@ -116,3 +116,7 @@ AUTOPARAM        v1.0.0               $(SUPPORT)/autoparamDriver               a
 GIT_URL=https://github.com/Beckhoff/
 
 ADSBECKHOFF      v17                  $(ADSDRIVER)/adsApp/src/beckhoffAdsLib   ADS                      YES              NO               NO
+
+GIT_URL=https://github.com/mdavidsaver/
+
+PSCDRV           master               $(SUPPORT)/pscdrv                        pscdrv                   YES              YES              YES
