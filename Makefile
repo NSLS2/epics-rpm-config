@@ -1,4 +1,4 @@
-.PHONY: dirs localinstall bundle flatbundle rpm srpm clean
+.PHONY: dirs localinstall bundle flatbundle rpm srpm clean updateversions
 
 rpm:
 	git-rpm-tools -d -n epics-bundle bb
@@ -8,6 +8,9 @@ srpm:
 
 dirs:
 	mkdir -p BUILD INSTALL RESULT
+
+updateversions:
+	cd installSynApps && python3 installCLI.py -c .. -v
 
 localinstall: dirs
 	cd installSynApps && python3 installCLI.py -c .. -b ../BUILD -i ../INSTALL -p -f -y

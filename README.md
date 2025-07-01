@@ -1,9 +1,4 @@
-# EPICS Configuration for RHEL 8
-
-<a href="https://jenkins.nsls2.bnl.gov/job/EPICS_SPEC/">
-   <img src="https://jenkins.nsls2.bnl.gov/job/EPICS_SPEC/badge/icon" alt="Jenkins Build Status">
-</a>
-
+# NSLS2 EPICS Bundle RPM Configuration
 
 This repository reflects the current configuration of EPICS base + modules used to create the `epics-bundle` rpm.
 It is synced with several Jenkins projects that execute the build, package it as an RPM, and then sign and upload the rpm.
@@ -14,16 +9,15 @@ Before performing any work on the configuration, you may want to set up a test e
 and make a new development branch. You may also want to fork this repository first instead, and clone from there.
 
 ```
-git clone https://github.com/NSLS2/rhel8-epics-config
-cd rhel8-epics-config
-git submodule init && git submodule update
+git clone --recursive https://github.com/NSLS2/epics-rpm-config
+cd epics-rpm-config
 git checkout -b my-dev-branch
 ```
 
 Next, run the build in order to get an EPICS installation on your system:
 
 ```
-# This is only necessary the first time, it will install any required yum/dnf packages. Run with root/sudo/dzdo as needed
+# This is only necessary the first time, it will install any required yum/dnf packages. Run this with root permissions
 sudo ./dependencyInstall.sh
 
 # This will install epics into the `INSTALL` directory. You can also use `make rpm` which will perform the local install and also generate an RPM
@@ -136,4 +130,4 @@ make clean
 make rpm
 ```
 
-Finally, once all of this is done, make a commit to your branch, push to your fork of `rhel8-epics-config`, and make a merge request with the main branch of the repo. This will be reviewed and merged, and a new version of the RPM will be generated from the updated configuration.
+Finally, once all of this is done, make a commit to your branch, push to your fork of `epics-rpm-config`, and make a merge request with the main branch of the repo. This will be reviewed and merged, and a new version of the RPM will be generated from the updated configuration.
