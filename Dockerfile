@@ -34,8 +34,8 @@ COPY . .
 ENV MAKEFLAGS="-j2"
 RUN ulimit -v 2097152 && make rpm
 
-# Install the generated RPM
-RUN rpm -ivh *.rpm
+# Install perl (required by the RPM) and then install the generated RPM
+RUN dnf -y install perl && rpm -ivh *.rpm
 
 # Final stage - runtime image
 FROM almalinux:8
