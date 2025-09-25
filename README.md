@@ -133,7 +133,13 @@ make rpm
 ### Docker
 
 ```bash
-docker build -t epics-bundle .
+# Initialize submodules first
+git submodule update --init --recursive
+
+# Build locally (requires GitHub Personal Access Token)
+docker build --build-arg GITHUB_TOKEN=$PAT -t epics-bundle .
+
+# Run container
 docker run -it epics-bundle
 ```
 

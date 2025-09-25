@@ -54,6 +54,8 @@ jobs:
         platforms: linux/amd64
         cache-from: type=gha
         cache-to: type=gha,mode=max
+        build-args: |
+          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
 
     - name: Test container
       run: |
