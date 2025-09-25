@@ -5,14 +5,21 @@ FROM almalinux:8 AS builder
 RUN dnf -y install dnf-plugins-core epel-release && \
     dnf config-manager --set-enabled powertools
 
-# Install build dependencies
+# Install build dependencies including rpmdevtools
 RUN dnf -y update && \
     dnf -y install re2c readline-devel libxml2-devel pcre-devel libtirpc-devel \
     libusbx-devel libXext-devel libjpeg-devel perl-devel git wget tar make \
     cmake gcc gcc-c++ pkgconfig libraw1394 boost-devel libusb-devel rpcgen \
     net-snmp-devel motif-devel libXt-devel zeromq-devel giflib-devel \
-    libXtst-devel python3 rpm-build && \
+    libXtst-devel python3 rpm-build rpmdevtools && \
     dnf clean all
+
+# Install git-rpm-tools from NSLS2 repository
+RUN git clone https://github.com/NSLS2/git-rpm-tools.git /tmp/git-rpm-tools && \
+    cd /tmp/git-rpm-tools && \
+    make rpm && \
+    rpm -ivh *.rpm && \
+    cd / && rm -rf /tmp/git-rpm-tools
 
 # Set working directory
 WORKDIR /build
@@ -20,7 +27,7 @@ WORKDIR /build
 # Copy source code (installSynApps submodule needs to be present)
 COPY . .
 
-# Build the RPM
+# Build the RPM using git-rpm-tools
 RUN make rpm
 
 # Install the generated RPM
