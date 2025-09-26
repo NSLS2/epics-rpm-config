@@ -130,7 +130,7 @@ make clean
 make rpm
 ```
 
-### Docker
+### Containers
 
 ```bash
 # Initialize submodules first
@@ -147,5 +147,3 @@ podman login ghcr.io
 podman tag epics-bundle ghcr.io/nsls2/epics-rpm-config:latest
 podman push ghcr.io/nsls2/epics-rpm-config:latest
 ```
-
-Finally, once all of this is done, make a commit to your branch, push to your fork of `epics-rpm-config`, and make a merge request with the main branch of the repo. This will be reviewed and merged, and a new version of the RPM will be generated from the updated configuration.
