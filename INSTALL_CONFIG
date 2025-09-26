@@ -46,7 +46,7 @@ SNCSEQ           R2-2-9               $(SUPPORT)/sequencer                     s
 
 GIT_URL=https://github.com/NSLS2/
 
-S7PLC            master               $(SUPPORT)/s7plc                         s7plc                    NO               NO               NO
+S7PLC            master               $(SUPPORT)/s7plc                         s7plc                    YES              YES              YES
 UIOCSYSTEM       master               $(SUPPORT)/uIOCSystem                    uIOCSystem               NO               NO               NO
 
 # Hacky solution here for modules with non-standard formats. Just standardize them instead of working around them
