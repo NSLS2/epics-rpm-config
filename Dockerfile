@@ -53,7 +53,7 @@ RUN dnf -y install dnf-plugins-core epel-release && \
 RUN dnf -y update && \
     dnf -y install bash boost giflib libraw1394 libtirpc libusb libusbx \
     libXext libxml2 libXt libXtst motif net-snmp-libs pcre perl re2c \
-    readline rpcgen zeromq && \
+    readline rpcgen zeromq python3 python3-pip && \
     dnf clean all
 
 # Copy EPICS installation from builder stage
