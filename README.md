@@ -137,10 +137,15 @@ make rpm
 git submodule update --init --recursive
 
 # Build locally (requires GitHub Personal Access Token)
-docker build --build-arg GITHUB_TOKEN=$PAT -t epics-bundle .
+podman build --build-arg GITHUB_TOKEN=$PAT -t epics-bundle .
 
 # Run container
-docker run -it epics-bundle
+podman run -it epics-bundle
+
+# Push to GitHub Container Registry (GHCR)
+podman login ghcr.io
+podman tag epics-bundle ghcr.io/nsls2/epics-rpm-config:latest
+podman push ghcr.io/nsls2/epics-rpm-config:latest
 ```
 
 Finally, once all of this is done, make a commit to your branch, push to your fork of `epics-rpm-config`, and make a merge request with the main branch of the repo. This will be reviewed and merged, and a new version of the RPM will be generated from the updated configuration.
