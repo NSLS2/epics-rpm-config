@@ -18,7 +18,8 @@ RUN dnf -y update && \
     dnf clean all
 
 # Install git-rpm-tools from NSLS2 repository
-RUN git clone https://${GITHUB_TOKEN}@github.com/NSLS2/git-rpm-tools.git /tmp/git-rpm-tools && \
+RUN git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/" && \
+    git clone https://github.com/NSLS2/git-rpm-tools.git /tmp/git-rpm-tools && \
     cd /tmp/git-rpm-tools && \
     make rpm && \
     rpm -ivh *.rpm && \
@@ -30,15 +31,23 @@ WORKDIR /build
 # Copy source code (installSynApps submodule needs to be present)
 COPY . .
 
-# Build the RPM using git-rpm-tools with limited parallelism
-ENV MAKEFLAGS="-j2"
-RUN ulimit -v 2097152 && make rpm
-
-# Install perl (required by the RPM) and then install the generated RPM
-RUN dnf -y install perl && rpm -ivh *.rpm
+# Build the RPM using git-rpm-tools with memory-optimized compilation
+ENV MAKEFLAGS="-j1"
+ENV CXXFLAGS="-O1 -g0"
+ENV CFLAGS="-O1 -g0"
+RUN --mount=type=tmpfs,target=/tmp/build \
+    ulimit -m 2097152 && \
+    make rpm && \
+    cp *.rpm /tmp/build/ && \
+    rm -rf rpmbuildtree BUILD INSTALL && \
+    dnf -y install perl && rpm -ivh --force /tmp/build/*.rpm
 
 # Final stage - runtime image
 FROM almalinux:8
+
+# Enable PowerTools/CodeReady Builder repo and EPEL for additional packages
+RUN dnf -y install dnf-plugins-core epel-release && \
+    dnf config-manager --set-enabled powertools
 
 # Install only runtime dependencies
 RUN dnf -y update && \
