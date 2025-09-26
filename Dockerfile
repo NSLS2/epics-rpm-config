@@ -32,7 +32,7 @@ WORKDIR /build
 COPY . .
 
 # Build the RPM using git-rpm-tools with memory-optimized compilation
-ENV MAKEFLAGS="-j1"
+ENV MAKEFLAGS="-j2"
 ENV CXXFLAGS="-O1 -g0"
 ENV CFLAGS="-O1 -g0"
 RUN --mount=type=tmpfs,target=/tmp/build \
