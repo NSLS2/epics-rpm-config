@@ -1,5 +1,5 @@
 #
-# INSTALL_CONFIG file saved by installSynApps on 2023-04-04 13:29:21.984419
+# INSTALL_CONFIG file saved by installSynApps on 2025-10-01 11:37:39.055636
 #
 
 INSTALL=/epics/src
@@ -10,40 +10,37 @@ INSTALL=/epics/src
 
 GIT_URL=https://github.com/epics-base/
 
-EPICS_BASE       R7.0.7               $(INSTALL)/base                          epics-base               YES              YES              YES
+EPICS_BASE       R7.0.9               $(INSTALL)/base                          epics-base               YES              YES              YES
 
 GIT_URL=https://github.com/EPICS-synApps/
 
-SUPPORT          R6-2-1               $(INSTALL)/support                       support                  YES              YES              NO
+SUPPORT          R6-3                 $(INSTALL)/support                       support                  YES              YES              NO
 CONFIGURE        R6-2                 $(SUPPORT)/configure                     configure                YES              YES              NO
 UTILS            R6-2                 $(SUPPORT)/utils                         utils                    YES              YES              NO
 
-GIT_URL=https://github.com/mdavidsaver/
-
-SNCSEQ           R2-2-8               $(SUPPORT)/seq                           sequencer-mirror         YES              YES              YES
-
 GIT_URL=https://github.com/epics-modules/
 
+SNCSEQ           R2-2-9               $(SUPPORT)/seq                           sequencer                YES              YES              YES
 IPAC             2.16                 $(SUPPORT)/ipac                          ipac                     YES              YES              YES
-ASYN             R4-44-2              $(SUPPORT)/asyn                          asyn                     YES              YES              YES
-AUTOSAVE         R5-10-2              $(SUPPORT)/autosave                      autosave                 YES              YES              YES
-BUSY             R1-7-3               $(SUPPORT)/busy                          busy                     YES              YES              YES
+ASYN             R4-45                $(SUPPORT)/asyn                          asyn                     YES              YES              YES
+AUTOSAVE         R5-11                $(SUPPORT)/autosave                      autosave                 YES              YES              YES
+BUSY             R1-7-4               $(SUPPORT)/busy                          busy                     YES              YES              YES
 CALC             R3-7-3               $(SUPPORT)/calc                          calc                     YES              YES              YES
 DEVIOCSTATS      master               $(SUPPORT)/iocStats                      iocStats                 YES              YES              YES
 SCALER           master               $(SUPPORT)/scaler                        scaler                   YES              YES              YES
 SSCAN            R2-11-5              $(SUPPORT)/sscan                         sscan                    YES              YES              YES
 IPUNIDIG         R2-12                $(SUPPORT)/ipUnidig                      ipUnidig                 YES              YES              YES
-CAPUTLOG         R4.0                 $(SUPPORT)/caPutLog                      caPutLog                 YES              YES              YES
-STD              R3-6-3               $(SUPPORT)/std                           std                      YES              YES              YES
+CAPUTLOG         R4.1                 $(SUPPORT)/caPutLog                      caPutLog                 YES              YES              YES
+STD              R3-6-4               $(SUPPORT)/std                           std                      YES              YES              YES
 MCA              R7-10                $(SUPPORT)/mca                           mca                      YES              YES              YES
-IP               R2-21-1              $(SUPPORT)/ip                            ip                       YES              YES              YES
-DELAYGEN         R1-2-3               $(SUPPORT)/delaygen                      delaygen                 YES              YES              YES
-MODBUS           R3-2                 $(SUPPORT)/modbus                        modbus                   YES              YES              YES
-LUA              R3-0-2               $(SUPPORT)/lua                           lua                      YES              YES              YES
-MOTOR            R7-3                 $(SUPPORT)/motor                         motor                    YES              YES              YES
+IP               R2-22                $(SUPPORT)/ip                            ip                       YES              YES              YES
+DELAYGEN         R1-2-4               $(SUPPORT)/delaygen                      delaygen                 YES              YES              YES
+MODBUS           R3-4                 $(SUPPORT)/modbus                        modbus                   YES              YES              YES
+LUA              R3-1                 $(SUPPORT)/lua                           lua                      YES              YES              YES
+MOTOR            R7-3-1               $(SUPPORT)/motor                         motor                    YES              YES              YES
 TPMAC            master               $(SUPPORT)/tpmac                         tpmac                    YES              YES              YES
-CAMAC            R2-7-4               $(SUPPORT)/camac                         camac                    YES              YES              YES
-OPTICS           R2-13-5              $(SUPPORT)/optics                        optics                   YES              YES              YES
+CAMAC            R2-7-5               $(SUPPORT)/camac                         camac                    YES              YES              YES
+OPTICS           R2-14                $(SUPPORT)/optics                        optics                   YES              YES              YES
 ETHER_IP         master               $(SUPPORT)/ether_ip                      ether_ip                 YES              YES              YES
 
 GIT_URL=https://code.nsls2.bnl.gov/epics-modules-nsls2/
@@ -51,7 +48,6 @@ GIT_URL=https://code.nsls2.bnl.gov/epics-modules-nsls2/
 S7PLC            master               $(SUPPORT)/s7plc                         s7plc                    YES              YES              YES
 UIOCSYSTEM       master               $(SUPPORT)/uIOCSystem                    uIOCSystem               YES              YES              YES
 
-# Hacky solution here for modules with non-standard formats. Just standardize them instead of working around them
 GIT_URL=https://github.com/jwlodek/
 
 PROLOGIX_GPIB    master               $(SUPPORT)/PrologixGPIB                  PrologixGPIB             YES              YES              YES
@@ -82,20 +78,13 @@ EDM              master               $(EXTENSIONS)/src/edm                    e
 
 GIT_URL=https://github.com/areaDetector/
 
-AREA_DETECTOR    R3-12-1              $(SUPPORT)/areaDetector                  areaDetector             YES              YES              NO
+AREA_DETECTOR    R3-14                $(SUPPORT)/areaDetector                  areaDetector             YES              YES              NO
 ADSUPPORT        R1-10                $(AREA_DETECTOR)/ADSupport               ADSupport                YES              YES              YES
-ADCORE           R3-12-1              $(AREA_DETECTOR)/ADCore                  ADCore                   YES              YES              YES
-
-
-GIT_URL=https://github.com/dmgav
-
-# The fix for multiple definitions of variables. Switch back to 'master' once the PR is merged.
-FFMPEGSERVER     fix-multiple-var-defs  $(AREA_DETECTOR)/ffmpegServer            ffmpegServer             YES              YES              YES
-# FFMPEGSERVER     master               $(AREA_DETECTOR)/ffmpegServer            ffmpegServer             YES              YES              YES
+ADCORE           R3-14                $(AREA_DETECTOR)/ADCore                  ADCore                   YES              YES              YES
 
 GIT_URL=https://github.com/areaDetector/
 
-
+FFMPEGSERVER     master               $(AREA_DETECTOR)/ffmpegServer            ffmpegServer             YES              YES              YES
 ADCOMPVISION     master               $(AREA_DETECTOR)/ADCompVision            ADCompVision             YES              YES              YES
 ADGENICAM        master               $(AREA_DETECTOR)/ADGenICam               ADGenICam                YES              YES              YES
 ADANDOR3         master               $(AREA_DETECTOR)/ADAndor3                ADAndor3                 YES              YES              YES
@@ -103,30 +92,26 @@ ADPROSILICA      R2-5                 $(AREA_DETECTOR)/ADProsilica             A
 ADSIMDETECTOR    14750dd              $(AREA_DETECTOR)/ADSimDetector           ADSimDetector            YES              YES              YES
 ADPILATUS        R2-9                 $(AREA_DETECTOR)/ADPilatus               ADPilatus                YES              YES              YES
 ADMERLIN         master               $(AREA_DETECTOR)/ADMerlin                ADMerlin                 YES              YES              YES
-ADEIGER          R3-4                 $(AREA_DETECTOR)/ADEiger                 ADEiger                  YES              YES              YES
+ADEIGER          R3-5                 $(AREA_DETECTOR)/ADEiger                 ADEiger                  YES              YES              YES
 ADVIMBA          master               $(AREA_DETECTOR)/ADVimba                 ADVimba                  YES              YES              YES
 ADPOINTGREY      master               $(AREA_DETECTOR)/ADPointGrey             ADPointGrey              YES              YES              YES
-ADSPINNAKER      R3-3                 $(AREA_DETECTOR)/ADSpinnaker             ADSpinnaker              YES              YES              YES
+ADSPINNAKER      R3-5                 $(AREA_DETECTOR)/ADSpinnaker             ADSpinnaker              YES              YES              YES
 ADANDOR          R2-8                 $(AREA_DETECTOR)/ADAndor                 ADAndor                  YES              YES              YES
 ADMYTHEN         master               $(AREA_DETECTOR)/ADMythen                ADMythen                 YES              YES              YES
 ADURL            master               $(AREA_DETECTOR)/ADURL                   ADURL                    YES              YES              YES
-ADUVC            R1-7                 $(AREA_DETECTOR)/ADUVC                   ADUVC                    YES              YES              YES
+ADUVC            R2-0                 $(AREA_DETECTOR)/ADUVC                   ADUVC                    YES              YES              YES
 
 GIT_URL=https://github.com/cosylab/
 
-ADSDRIVER        v3.0.0               $(SUPPORT)/adsDriver                     adsDriver                YES              YES              YES
-AUTOPARAM        v1.0.0               $(SUPPORT)/autoparamDriver               autoparamDriver          YES              YES              YES
+ADSDRIVER        v3.1.0               $(SUPPORT)/adsDriver                     adsDriver                YES              YES              YES
+AUTOPARAM        v2.0.0               $(SUPPORT)/autoparamDriver               autoparamDriver          YES              YES              YES
 
 GIT_URL=https://github.com/Beckhoff/
 
-ADSBECKHOFF      v17                  $(ADSDRIVER)/adsApp/src/beckhoffAdsLib   ADS                      YES              NO               NO
+ADSBECKHOFF      v28.1                $(ADSDRIVER)/adsApp/src/beckhoffAdsLib   ADS                      YES              NO               NO
 
 GIT_URL=https://github.com/epics-modules/
 
-XSPRESS3         0e8eb4ba             $(SUPPORT)/xspress3                      xspress3                 YES              YES              YES
+XSPRESS3         3.2.8                $(SUPPORT)/xspress3                      xspress3                 YES              YES              YES
+QUADEM           R9-5                 $(SUPPORT)/quadEM                        quadEM                   YES              YES              YES
 
-GIT_URL=https://github.com/dmgav
-
-# The fix adds explicit type conversion (error while building with gcc v11.4). The issue is already fixed in quadEM master branch.
-QUADEM           R9-4-fix              $(SUPPORT)/quadEM                        quadEM                   YES              YES              YES
-# QUADEM           R9-4                 $(SUPPORT)/quadEM                        quadEM                   YES              YES              YES

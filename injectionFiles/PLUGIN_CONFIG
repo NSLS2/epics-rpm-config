@@ -1,4 +1,4 @@
-# Saved by installSynApps on 2023-04-04 13:29:21.984153
+# Saved by installSynApps on 2025-10-01 11:37:39.054750
 __TARGET_LOC__=$(AREA_DETECTOR)/ADCore/iocBoot/EXAMPLE_commonPlugins.cmd
 
 dbLoadRecords("$(DEVIOCSTATS)/db/iocAdminSoft.db", "IOC=$(PREFIX)")
