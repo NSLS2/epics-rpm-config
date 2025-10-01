@@ -44,7 +44,7 @@ CAMAC            R2-7-3               $(SUPPORT)/camac                         c
 OPTICS           R2-13-5              $(SUPPORT)/optics                        optics                   YES              YES              YES
 SNCSEQ           2.2.8                $(SUPPORT)/sequencer                     sequencer                YES              YES              YES
 
-GIT_URL=https://code.nsls2.bnl.gov/epics-modules-nsls2/
+GIT_URL=https://github.com/NSLS2/
 
 S7PLC            master               $(SUPPORT)/s7plc                         s7plc                    YES              YES              YES
 UIOCSYSTEM       master               $(SUPPORT)/uIOCSystem                    uIOCSystem               YES              YES              YES
