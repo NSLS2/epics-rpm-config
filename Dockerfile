@@ -32,11 +32,13 @@ WORKDIR /build
 COPY . .
 
 # Build the RPM using git-rpm-tools with memory-optimized compilation
+# -j1: Single-threaded compilation to reduce memory usage
+# -O0: No optimization to minimize compiler memory consumption
+# -g0: No debug symbols to reduce memory and binary size
 ENV MAKEFLAGS="-j1"
-ENV CXXFLAGS="-O1 -g0"
-ENV CFLAGS="-O1 -g0"
+ENV CXXFLAGS="-O0 -g0"
+ENV CFLAGS="-O0 -g0"
 RUN --mount=type=tmpfs,target=/tmp/build \
-    ulimit -m 2097152 && \
     make rpm && \
     cp *.rpm /tmp/build/ && \
     rm -rf rpmbuildtree BUILD INSTALL && \
