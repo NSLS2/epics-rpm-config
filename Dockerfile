@@ -49,11 +49,16 @@ FROM almalinux:8
 RUN dnf -y install dnf-plugins-core epel-release && \
     dnf config-manager --set-enabled powertools
 
-# Install only runtime dependencies
+# Install runtime dependencies and development tools
 RUN dnf -y update && \
     dnf -y install bash boost giflib libraw1394 libtirpc libusb libusbx \
     libXext libxml2 libXt libXtst motif net-snmp-libs pcre perl re2c \
     readline rpcgen zeromq python39 python39-pip && \
+    dnf -y install python3-requests python3-pyyaml python3-dnf && \
+    dnf -y install procServ git libxml2-devel libXext-devel zlib-devel libX11-devel && \
+    dnf -y groupinstall "Development Tools" && \
+    dnf -y install gcc gcc-c++ make readline-devel && \
+    dnf -y install seq || true && \
     dnf clean all
 
 # Copy EPICS installation from builder stage
@@ -86,8 +91,10 @@ ENV PATH="${EPICS_BASE}/bin/${EPICS_HOST_ARCH}:${PATH}"
 ENV EPICS_CA_ADDR_LIST="localhost"
 ENV EPICS_CA_AUTO_ADDR_LIST="localhost"
 
-# Create non-root user for running EPICS
-RUN useradd -r -s /bin/bash softioc-tst
+# Create required directories and non-root user for running EPICS
+RUN mkdir -p /epics/common /epics/modules && \
+    useradd -r -s /bin/bash softioc-tst && \
+    chown -R softioc-tst:softioc-tst /epics
 USER softioc-tst
 
 WORKDIR /home/epics
