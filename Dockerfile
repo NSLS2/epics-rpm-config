@@ -83,10 +83,12 @@ RUN ldconfig
 ENV EPICS_BASE=/usr/lib64/epics
 ENV EPICS_HOST_ARCH=linux-x86_64
 ENV PATH="${EPICS_BASE}/bin/${EPICS_HOST_ARCH}:${PATH}"
+ENV EPICS_CA_ADDR_LIST="localhost"
+ENV EPICS_CA_AUTO_ADDR_LIST="localhost"
 
 # Create non-root user for running EPICS
-RUN useradd -r -s /bin/bash epics
-USER epics
+RUN useradd -r -s /bin/bash softioc-tst
+USER softioc-tst
 
 WORKDIR /home/epics
 
