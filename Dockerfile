@@ -29,9 +29,6 @@ COPY . .
 
 # Fix submodule - Docker COPY breaks git submodule structure, so clone it directly
 RUN git config --global --add safe.directory /build && \
-    echo "=== Git status before submodule fix ===" && \
-    git status || true && \
-    git log --oneline -1 || true && \
     SUBMODULE_URL=$(git config -f .gitmodules submodule.installSynApps.url) && \
     SUBMODULE_COMMIT=$(git ls-tree HEAD installSynApps | awk '{print $3}') && \
     rm -rf installSynApps && \
@@ -39,8 +36,7 @@ RUN git config --global --add safe.directory /build && \
     cd installSynApps && \
     git checkout $SUBMODULE_COMMIT && \
     cd /build && \
-    echo "=== Testing git archive ===" && \
-    git archive HEAD 2>&1 | head -20 || true
+    git checkout -b build-branch || true
 
 # Build the RPM using git-rpm-tools with memory-optimized compilation
 # -j1: Single-threaded compilation to reduce memory usage
