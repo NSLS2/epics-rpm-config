@@ -135,13 +135,22 @@ Finally, once all of this is done, make a commit to your branch, push to your fo
 
 ### Containers
 
+**Pull and run the latest release:**
+
+```bash
+docker pull ghcr.io/nsls2/epics-alma8:latest
+docker run -it ghcr.io/nsls2/epics-alma8:latest
+```
+
+**Build locally:**
+
 ```bash
 # Initialize submodules first
 git submodule update --init --recursive
 
-# Build locally (requires GitHub Personal Access Token)
-podman build --build-arg GITHUB_TOKEN=$PAT -t epics-bundle .
+# Build the container
+docker build -t epics-alma8 .
 
 # Run container
-podman run -it epics-bundle
+docker run -it epics-alma8
 ```

@@ -1,9 +1,6 @@
 # Multi-stage build for EPICS bundle RPM
 FROM almalinux:8 AS builder
 
-# Build argument for GitHub token
-ARG GITHUB_TOKEN
-
 # Enable PowerTools/CodeReady Builder repo and EPEL for additional packages
 RUN dnf -y install dnf-plugins-core epel-release && \
     dnf config-manager --set-enabled powertools
@@ -18,8 +15,7 @@ RUN dnf -y update && \
     dnf clean all
 
 # Install git-rpm-tools from NSLS2 repository
-RUN git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/" && \
-    git clone https://github.com/NSLS2/git-rpm-tools.git /tmp/git-rpm-tools && \
+RUN git clone https://github.com/NSLS2/git-rpm-tools.git /tmp/git-rpm-tools && \
     cd /tmp/git-rpm-tools && \
     make rpm && \
     rpm -ivh *.rpm && \

@@ -57,8 +57,6 @@ jobs:
         platforms: linux/amd64
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        build-args: |
-          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
     - name: Test container
       run: |
         docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }} caget --help
