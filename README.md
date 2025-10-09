@@ -144,9 +144,4 @@ podman build --build-arg GITHUB_TOKEN=$PAT -t epics-bundle .
 
 # Run container
 podman run -it epics-bundle
-
-# Push to GitHub Container Registry (GHCR)
-podman login ghcr.io
-podman tag epics-bundle ghcr.io/nsls2/epics-rpm-config:latest
-podman push ghcr.io/nsls2/epics-rpm-config:latest
 ```
