@@ -57,6 +57,23 @@ jobs:
         platforms: linux/amd64
         cache-from: type=gha
         cache-to: type=gha,mode=max
+        outputs: type=docker,dest=/tmp/image.tar
+
+    - name: Extract RPM from Docker image
+      run: |
+        docker load -i /tmp/image.tar
+        container_id=$(docker create $(docker images -q | head -n1))
+        docker cp $container_id:/rpms/. ./rpms/
+        docker rm $container_id
+        ls -la ./rpms/
+
+    - name: Upload RPM as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: epics-bundle-rpm
+        path: ./rpms/*.rpm
+        retention-days: 90
+
     - name: Test container
       if: github.event_name == 'push'
       run: |

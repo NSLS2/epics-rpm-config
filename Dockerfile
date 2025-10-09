@@ -40,11 +40,10 @@ RUN git config --global --add safe.directory /build && \
 ENV MAKEFLAGS="-j1"
 ENV CXXFLAGS="-O0 -g0"
 ENV CFLAGS="-O0 -g0"
-RUN --mount=type=tmpfs,target=/tmp/build \
-    make rpm && \
-    cp *.rpm /tmp/build/ && \
-    rm -rf rpmbuildtree BUILD INSTALL && \
-    dnf -y install perl && rpm -ivh --force /tmp/build/*.rpm
+RUN make rpm && \
+    mkdir -p /rpms && \
+    cp *.rpm /rpms/ && \
+    dnf -y install perl && rpm -ivh --force *.rpm
 
 # Final stage - runtime image
 FROM almalinux:8
