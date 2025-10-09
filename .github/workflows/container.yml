@@ -1,6 +1,9 @@
 name: Build EPICS Bundle Container
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     tags:
       - 'v*'
@@ -11,6 +14,7 @@ env:
 
 jobs:
   build:
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     permissions:
       contents: read
