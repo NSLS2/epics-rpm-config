@@ -51,13 +51,14 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
-        push: true
+        push: ${{ github.event_name == 'push' }}
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
         platforms: linux/amd64
         cache-from: type=gha
         cache-to: type=gha,mode=max
     - name: Test container
+      if: github.event_name == 'push'
       run: |
         docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }} caget --help
         docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }} ls -la /usr/lib64/epics
