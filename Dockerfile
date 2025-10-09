@@ -28,9 +28,10 @@ WORKDIR /build
 COPY . .
 
 # Ensure git repository is in a clean state for git-rpm-tools
+# Re-initialize submodules after COPY since .git structure breaks in Docker
 RUN git config --global --add safe.directory /build && \
-    git status && \
-    ls -la installSynApps/
+    git config --global --add safe.directory '*' && \
+    git submodule update --init --recursive
 
 # Build the RPM using git-rpm-tools with memory-optimized compilation
 # -j1: Single-threaded compilation to reduce memory usage
