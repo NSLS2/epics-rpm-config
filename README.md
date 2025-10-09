@@ -131,3 +131,26 @@ make rpm
 ```
 
 Finally, once all of this is done, make a commit to your branch, push to your fork of `epics-rpm-config`, and make a merge request with the main branch of the repo. This will be reviewed and merged, and a new version of the RPM will be generated from the updated configuration.
+
+
+### Containers
+
+**Pull and run the latest release:**
+
+```bash
+docker pull ghcr.io/nsls2/epics-alma8:latest
+docker run -it ghcr.io/nsls2/epics-alma8:latest
+```
+
+**Build locally:**
+
+```bash
+# Initialize submodules first
+git submodule update --init --recursive
+
+# Build the container
+docker build -t epics-alma8 .
+
+# Run container
+docker run -it epics-alma8
+```
