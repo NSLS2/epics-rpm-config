@@ -27,8 +27,10 @@ WORKDIR /build
 # Copy source code (installSynApps submodule needs to be present)
 COPY . .
 
-# Ensure submodules are properly initialized
-RUN git submodule update --init --recursive
+# Ensure git repository is in a clean state for git-rpm-tools
+RUN git config --global --add safe.directory /build && \
+    git status && \
+    ls -la installSynApps/
 
 # Build the RPM using git-rpm-tools with memory-optimized compilation
 # -j1: Single-threaded compilation to reduce memory usage
