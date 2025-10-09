@@ -72,7 +72,13 @@ jobs:
       with:
         name: epics-bundle-rpm
         path: ./rpms/*.rpm
-        retention-days: 90
+
+    - name: Upload RPM to GitHub Release
+      if: github.event_name == 'push'
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh release upload ${{ github.ref_name }} ./rpms/*.rpm --clobber
 
     - name: Test container
       if: github.event_name == 'push'
