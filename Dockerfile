@@ -27,11 +27,14 @@ WORKDIR /build
 # Copy source code (installSynApps submodule needs to be present)
 COPY . .
 
-# Ensure git repository is in a clean state for git-rpm-tools
-# Re-initialize submodules after COPY since .git structure breaks in Docker
+# Fix submodule - Docker COPY breaks git submodule structure, so clone it directly
 RUN git config --global --add safe.directory /build && \
-    git config --global --add safe.directory '*' && \
-    git submodule update --init --recursive
+    SUBMODULE_URL=$(git config -f .gitmodules submodule.installSynApps.url) && \
+    SUBMODULE_COMMIT=$(git ls-tree HEAD installSynApps | awk '{print $3}') && \
+    rm -rf installSynApps && \
+    git clone $SUBMODULE_URL installSynApps && \
+    cd installSynApps && \
+    git checkout $SUBMODULE_COMMIT
 
 # Build the RPM using git-rpm-tools with memory-optimized compilation
 # -j1: Single-threaded compilation to reduce memory usage
