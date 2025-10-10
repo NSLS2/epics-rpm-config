@@ -20,6 +20,16 @@ jobs:
       packages: write
 
     steps:
+    - name: Free up disk space
+      # EPICS build is very large (~25GB). Remove unused pre-installed tools to free up space.
+      # GitHub runners have ~14GB free by default, which isn't enough for the full build.
+      run: |
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -rf /opt/ghc
+        sudo rm -rf /usr/local/share/boost
+        sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+        docker system prune -af
+
     - name: Checkout repository
       uses: actions/checkout@v4
       with:

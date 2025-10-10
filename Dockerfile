@@ -48,7 +48,8 @@ ENV CFLAGS="-O0 -g0"
 RUN make rpm && \
     mkdir -p /rpms && \
     cp *.rpm /rpms/ && \
-    dnf -y install perl && rpm -ivh --force *.rpm
+    rm -rf rpmbuildtree BUILD INSTALL && \
+    dnf -y install perl && rpm -ivh --force /rpms/*.rpm
 
 # Final stage - runtime image
 FROM almalinux:8
