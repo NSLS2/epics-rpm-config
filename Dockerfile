@@ -54,6 +54,9 @@ RUN make rpm && \
 # Final stage - runtime image
 FROM almalinux:8
 
+# Copy RPM from builder stage for extraction by CI workflow
+COPY --from=builder /rpms /rpms
+
 # Enable PowerTools/CodeReady Builder repo and EPEL for additional packages
 RUN dnf -y install dnf-plugins-core epel-release && \
     dnf config-manager --set-enabled powertools

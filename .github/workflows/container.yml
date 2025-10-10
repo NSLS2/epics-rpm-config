@@ -1,4 +1,4 @@
-name: Build EPICS Bundle Container
+name: Build rpm and container
 
 on:
   pull_request:
@@ -21,8 +21,8 @@ jobs:
 
     steps:
     - name: Free up disk space
-      # EPICS build is very large (~25GB). Remove unused pre-installed tools to free up space.
-      # GitHub runners have ~14GB free by default, which isn't enough for the full build.
+      # EPICS build requires ~25GB. Runners have 84GB total but only 14GB free due to pre-installed tools.
+      # Remove unused tools (dotnet, ghc, boost, etc.) to free up an additional ~30GB.
       run: |
         sudo rm -rf /usr/share/dotnet
         sudo rm -rf /opt/ghc
