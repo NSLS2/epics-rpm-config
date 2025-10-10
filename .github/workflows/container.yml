@@ -1,12 +1,8 @@
-name: Build EPICS Bundle Container
+name: Build rpm and container
 
 on:
-  pull_request:
-    branches:
-      - main
-  push:
-    tags:
-      - 'v*'
+  release:
+    types: [published]
 
 env:
   REGISTRY: ghcr.io
@@ -14,13 +10,22 @@ env:
 
 jobs:
   build:
-    if: github.event_name == 'push' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
 
     steps:
+    - name: Free up disk space
+      # EPICS build requires ~25GB. Runners have 84GB total but only 14GB free due to pre-installed tools.
+      # Remove unused tools (dotnet, ghc, boost, etc.) to free up an additional ~30GB.
+      run: |
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -rf /opt/ghc
+        sudo rm -rf /usr/local/share/boost
+        sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+        docker system prune -af
+
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
@@ -43,10 +48,10 @@ jobs:
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
         tags: |
-          type=ref,event=tag
           type=semver,pattern={{version}}
           type=semver,pattern={{major}}.{{minor}}
           type=semver,pattern={{major}}
+          type=raw,value=latest,enable={{is_default_branch}}
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
@@ -57,7 +62,29 @@ jobs:
         platforms: linux/amd64
         cache-from: type=gha
         cache-to: type=gha,mode=max
+        outputs: type=docker,dest=/tmp/image.tar
+
+    - name: Extract RPM from Docker image
+      run: |
+        docker load -i /tmp/image.tar
+        container_id=$(docker create $(docker images -q | head -n1))
+        docker cp $container_id:/rpms/. ./rpms/
+        docker rm $container_id
+        ls -la ./rpms/
+
+    - name: Upload RPM as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: epics-bundle-rpm
+        path: ./rpms/*.rpm
+
+    - name: Upload RPM to GitHub Release
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh release upload ${{ github.event.release.tag_name }} ./rpms/*.rpm --clobber
+
     - name: Test container
       run: |
-        docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }} caget --help
-        docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }} ls -la /usr/lib64/epics
+        docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.release.tag_name }} caget --help
+        docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.release.tag_name }} ls -la /usr/lib64/epics

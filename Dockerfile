@@ -27,6 +27,17 @@ WORKDIR /build
 # Copy source code (installSynApps submodule needs to be present)
 COPY . .
 
+# Fix submodule - Docker COPY breaks git submodule structure, so clone it directly
+RUN git config --global --add safe.directory /build && \
+    SUBMODULE_URL=$(git config -f .gitmodules submodule.installSynApps.url) && \
+    SUBMODULE_COMMIT=$(git ls-tree HEAD installSynApps | awk '{print $3}') && \
+    rm -rf installSynApps && \
+    git clone $SUBMODULE_URL installSynApps && \
+    cd installSynApps && \
+    git checkout $SUBMODULE_COMMIT && \
+    cd /build && \
+    git checkout -b build-branch || true
+
 # Build the RPM using git-rpm-tools with memory-optimized compilation
 # -j1: Single-threaded compilation to reduce memory usage
 # -O0: No optimization to minimize compiler memory consumption
@@ -34,14 +45,17 @@ COPY . .
 ENV MAKEFLAGS="-j1"
 ENV CXXFLAGS="-O0 -g0"
 ENV CFLAGS="-O0 -g0"
-RUN --mount=type=tmpfs,target=/tmp/build \
-    make rpm && \
-    cp *.rpm /tmp/build/ && \
+RUN make rpm && \
+    mkdir -p /rpms && \
+    cp *.rpm /rpms/ && \
     rm -rf rpmbuildtree BUILD INSTALL && \
-    dnf -y install perl && rpm -ivh --force /tmp/build/*.rpm
+    dnf -y install perl && rpm -ivh --force /rpms/*.rpm
 
 # Final stage - runtime image
 FROM almalinux:8
+
+# Copy RPM from builder stage for extraction by CI workflow
+COPY --from=builder /rpms /rpms
 
 # Enable PowerTools/CodeReady Builder repo and EPEL for additional packages
 RUN dnf -y install dnf-plugins-core epel-release && \
