@@ -1,9 +1,6 @@
 name: Build rpm and container
 
 on:
-  pull_request:
-    branches:
-      - main
   release:
     types: [published]
 
@@ -13,7 +10,6 @@ env:
 
 jobs:
   build:
-    if: github.event_name == 'release' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -60,7 +56,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
-        push: ${{ github.event_name == 'release' }}
+        push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
         platforms: linux/amd64
@@ -83,14 +79,12 @@ jobs:
         path: ./rpms/*.rpm
 
     - name: Upload RPM to GitHub Release
-      if: github.event_name == 'release'
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         gh release upload ${{ github.event.release.tag_name }} ./rpms/*.rpm --clobber
 
     - name: Test container
-      if: github.event_name == 'release'
       run: |
         docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.release.tag_name }} caget --help
         docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.release.tag_name }} ls -la /usr/lib64/epics
