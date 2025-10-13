@@ -90,5 +90,5 @@ jobs:
 
     - name: Test container
       run: |
-        docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:${{ github.event.release.tag_name }} caget --help
+        docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:${{ github.event.release.tag_name }} caget -h
         docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:${{ github.event.release.tag_name }} ls -la /usr/lib64/epics
