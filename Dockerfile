@@ -18,7 +18,7 @@ RUN dnf -y update && \
 RUN git clone https://github.com/NSLS2/git-rpm-tools.git /tmp/git-rpm-tools && \
     cd /tmp/git-rpm-tools && \
     make rpm && \
-    rpm -ivh *.rpm && \
+    dnf -y install *.rpm && \
     cd / && rm -rf /tmp/git-rpm-tools
 
 # Set working directory
@@ -49,7 +49,7 @@ RUN make rpm && \
     mkdir -p /rpms && \
     cp *.rpm /rpms/ && \
     rm -rf rpmbuildtree BUILD INSTALL && \
-    dnf -y install perl && rpm -ivh --force /rpms/*.rpm
+    dnf -y install perl && dnf -y install /rpms/*.rpm
 
 # Final stage - runtime image
 FROM almalinux:8
