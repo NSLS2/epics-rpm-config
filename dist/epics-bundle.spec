@@ -84,7 +84,6 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 
 %files
 %dir /usr/lib64/epics
-%dir /usr/lib
 /usr/lib64/epics/*
 /usr/lib/epics
 /usr/bin/*
