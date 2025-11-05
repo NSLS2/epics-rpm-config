@@ -18,6 +18,7 @@ RUN dnf -y update && \
     cmake gcc gcc-c++ pkgconfig libraw1394 boost-devel libusb-devel rpcgen \
     net-snmp-devel motif-devel libXt-devel zeromq-devel giflib-devel \
     libXtst-devel python3 rpm-build rpmdevtools && \
+    dnf -y install perl-FindBin perl-Pod-Html perl-Getopt-Long perl-Data-Dumper || true && \
     dnf clean all
 
 # Install git-rpm-tools from NSLS2 repository
