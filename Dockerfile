@@ -1,9 +1,15 @@
 # Multi-stage build for EPICS bundle RPM
-FROM almalinux:8 AS builder
+ARG ALMA_VERSION=8
+FROM almalinux:${ALMA_VERSION} AS builder
 
 # Enable PowerTools/CodeReady Builder repo and EPEL for additional packages
+# Note: AlmaLinux 8 uses "powertools", AlmaLinux 9 uses "crb"
 RUN dnf -y install dnf-plugins-core epel-release && \
-    dnf config-manager --set-enabled powertools
+    if [ "${ALMA_VERSION}" = "8" ]; then \
+        dnf config-manager --set-enabled powertools; \
+    else \
+        dnf config-manager --set-enabled crb; \
+    fi
 
 # Install build dependencies including rpmdevtools
 RUN dnf -y update && \
@@ -12,6 +18,7 @@ RUN dnf -y update && \
     cmake gcc gcc-c++ pkgconfig libraw1394 boost-devel libusb-devel rpcgen \
     net-snmp-devel motif-devel libXt-devel zeromq-devel giflib-devel \
     libXtst-devel python3 rpm-build rpmdevtools && \
+    dnf -y install perl-FindBin perl-Pod-Html perl-Getopt-Long perl-Data-Dumper || true && \
     dnf clean all
 
 # Install git-rpm-tools from NSLS2 repository
@@ -52,14 +59,20 @@ RUN make rpm && \
     dnf -y install perl && dnf -y install /rpms/*.rpm
 
 # Final stage - runtime image
-FROM almalinux:8
+ARG ALMA_VERSION=8
+FROM almalinux:${ALMA_VERSION}
 
 # Copy RPM from builder stage for extraction by CI workflow
 COPY --from=builder /rpms /rpms
 
 # Enable PowerTools/CodeReady Builder repo and EPEL for additional packages
+# Note: AlmaLinux 8 uses "powertools", AlmaLinux 9 uses "crb"
 RUN dnf -y install dnf-plugins-core epel-release && \
-    dnf config-manager --set-enabled powertools
+    if [ "${ALMA_VERSION}" = "8" ]; then \
+        dnf config-manager --set-enabled powertools; \
+    else \
+        dnf config-manager --set-enabled crb; \
+    fi
 
 # Install runtime dependencies and development tools
 RUN dnf -y update && \
