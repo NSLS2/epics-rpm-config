@@ -83,7 +83,7 @@ jobs:
     - name: Upload RPM as artifact
       uses: actions/upload-artifact@v4
       with:
-        name: epics-bundle-rpm-alma${{ matrix.alma_version }}
+        name: epics-bundle-rpm-el${{ matrix.alma_version }}
         path: ./rpms/*.rpm
 
     - name: Upload RPM to GitHub Release
