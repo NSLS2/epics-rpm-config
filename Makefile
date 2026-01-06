@@ -1,10 +1,10 @@
 .PHONY: dirs localinstall bundle flatbundle rpm srpm clean updateversions
 
 rpm:
-	git-rpm-tools -d -n epics-bundle bb
+	git-rpm-tools -a -d -n epics-bundle bb
 
 srpm:
-	git-rpm-tools -d -n epics-bundle bs
+	git-rpm-tools -a -d -n epics-bundle bs
 
 dirs:
 	mkdir -p BUILD INSTALL RESULT
