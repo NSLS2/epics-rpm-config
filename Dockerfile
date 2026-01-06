@@ -73,25 +73,9 @@ RUN dnf -y update && \
     dnf -y install seq || true && \
     dnf clean all
 
-# Copy EPICS installation from builder stage
-COPY --from=builder /usr/lib64/epics /usr/lib64/epics
-COPY --from=builder /usr/lib/epics /usr/lib/epics
-COPY --from=builder /usr/bin/caget /usr/bin/caget
-COPY --from=builder /usr/bin/cainfo /usr/bin/cainfo
-COPY --from=builder /usr/bin/camonitor /usr/bin/camonitor
-COPY --from=builder /usr/bin/caput /usr/bin/caput
-COPY --from=builder /usr/bin/caRepeater /usr/bin/caRepeater
-COPY --from=builder /usr/bin/casw /usr/bin/casw
-COPY --from=builder /usr/bin/pvget /usr/bin/pvget
-COPY --from=builder /usr/bin/pvinfo /usr/bin/pvinfo
-COPY --from=builder /usr/bin/pvmonitor /usr/bin/pvmonitor
-COPY --from=builder /usr/bin/pvput /usr/bin/pvput
-COPY --from=builder /usr/bin/pvlist /usr/bin/pvlist
-COPY --from=builder /usr/bin/edm /usr/bin/edm
-COPY --from=builder /usr/bin/medm /usr/bin/medm
-COPY --from=builder /usr/bin/msi /usr/bin/msi
-COPY --from=builder /usr/bin/makeBaseApp /usr/bin/makeBaseApp
-COPY --from=builder /etc/ld.so.conf.d/epics-bundle-x86_64.conf /etc/ld.so.conf.d/epics-bundle-x86_64.conf
+# Install EPICS bundle RPM and remove RPM files
+RUN dnf -y install /rpms/*.rpm
+RUN rm -rf /rpms
 
 # Update library cache
 RUN ldconfig

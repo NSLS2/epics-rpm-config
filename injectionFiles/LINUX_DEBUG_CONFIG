@@ -1,4 +1,4 @@
-# Saved by installSynApps on 2021-04-07 10:54:12.622265
+# Saved by installSynApps on 2026-01-06 11:29:46.284386
 __TARGET_LOC__=$(EPICS_BASE)/configure/CONFIG_SITE
 
 CROSS_COMPILER_TARGET_ARCHS=linux-x86_64-debug
