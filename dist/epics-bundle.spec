@@ -1,10 +1,10 @@
 Name:           epics-bundle
-Version:        7.0.5_0.0.0
-Release:        2%{?dist}
+Version:        7.0.10_0.0.0
+Release:        1%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD-3-Clause
-URL:            https://github.com/NSLS2/rhel8-epics-config
+URL:            https://github.com/NSLS2/epics-rpm-config
 Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires:  python3 boost-devel cmake gcc gcc-c++ giflib-devel git
@@ -92,6 +92,13 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 #/lib64/*
 
 %changelog
+* Tue Jan 06 2026 Wlodek, Jakub <jwlodek@bnl.gov> - 7.0.10_0.0.0-1
+- Bump version of EPICS base to 7.0.10 along with many modules
+- Remove AD driver modules - artifacts were unused generally and increased file sizes
+- Don't build example IOCs
+- Don't build GraphicsMagick with ADSupport
+- Tested build on RH9
+
 * Tue Apr 04 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-2
 - Added git-rpm-tools in BuildRequires as the Makefile uses it
 - Added LICENSE and adjusted .spec for it
