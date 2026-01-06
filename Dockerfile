@@ -11,7 +11,7 @@ RUN dnf -y update && \
     libusbx-devel libXext-devel libjpeg-devel perl-devel git wget tar make \
     cmake gcc gcc-c++ pkgconfig libraw1394 boost-devel libusb-devel rpcgen \
     net-snmp-devel motif-devel libXt-devel zeromq-devel giflib-devel \
-    libXtst-devel python3 rpm-build rpmdevtools && \
+    libXtst-devel python3 rpm-build rpmdevtools libevent-devel && \
     dnf clean all
 
 # Install git-rpm-tools from NSLS2 repository
@@ -69,7 +69,7 @@ RUN dnf -y update && \
     dnf -y install python3-requests python3-pyyaml python3-dnf && \
     dnf -y install procServ git libxml2-devel libXext-devel zlib-devel libX11-devel && \
     dnf -y groupinstall "Development Tools" && \
-    dnf -y install gcc gcc-c++ make readline-devel && \
+    dnf -y install gcc gcc-c++ make readline-devel libevent-devel && \
     dnf -y install seq || true && \
     dnf clean all
 
