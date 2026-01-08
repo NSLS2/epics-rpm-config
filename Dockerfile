@@ -62,20 +62,7 @@ RUN dnf -y install dnf-plugins-core epel-release && \
     dnf config-manager --set-enabled powertools
 
 # Install runtime dependencies and development tools
-RUN dnf -y update && \
-    dnf -y install bash boost giflib libraw1394 libtirpc libusb libusbx \
-    libXext libxml2 libXt libXtst motif net-snmp-libs pcre perl re2c \
-    readline rpcgen zeromq python39 python39-pip && \
-    dnf -y install python3-requests python3-pyyaml python3-dnf && \
-    dnf -y install procServ git libxml2-devel libXext-devel zlib-devel libX11-devel && \
-    dnf -y groupinstall "Development Tools" && \
-    dnf -y install gcc gcc-c++ make readline-devel libevent-devel && \
-    dnf -y install seq || true && \
-    dnf clean all
-
-# Install EPICS bundle RPM and remove RPM files
-RUN dnf -y install /rpms/*.rpm
-RUN rm -rf /rpms
+RUN dnf -y update && dnf -y install /rpms/*.rpm
 
 # Update library cache
 RUN ldconfig
