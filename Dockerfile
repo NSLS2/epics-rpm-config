@@ -46,23 +46,29 @@ ENV MAKEFLAGS="-j1"
 ENV CXXFLAGS="-O0 -g0"
 ENV CFLAGS="-O0 -g0"
 RUN make rpm && \
+    make srpm && \
     mkdir -p /rpms && \
+    mkdir -p /srpms/ && \
     cp *.rpm /rpms/ && \
-    rm -rf rpmbuildtree BUILD INSTALL && \
-    dnf -y install perl && dnf -y install /rpms/*.rpm
+    cp *.src.rpm /srpms/ && \
+    rm -rf rpmbuildtree BUILD INSTALL
 
 # Final stage - runtime image
 FROM almalinux:8
 
 # Copy RPM from builder stage for extraction by CI workflow
 COPY --from=builder /rpms /rpms
+COPY --from=builder /srpms /srpms
 
 # Enable PowerTools/CodeReady Builder repo and EPEL for additional packages
 RUN dnf -y install dnf-plugins-core epel-release && \
     dnf config-manager --set-enabled powertools
 
 # Install runtime dependencies and development tools
-RUN dnf -y update && dnf -y install /rpms/*.rpm
+RUN dnf -y update && dnf -y install /rpms/*.rpm && \
+    dnf -y install perl wget tar make cmake gcc gcc-c++ pkgconfig git \
+    dnf -y install python3 && \
+    dnf clean all
 
 # Update library cache
 RUN ldconfig
