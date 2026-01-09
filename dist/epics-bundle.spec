@@ -15,7 +15,7 @@ BuildRequires:  pkgconf re2c readline-devel rpcgen tar wget zeromq-devel
 BuildRequires:  git-rpm-tools libevent-devel
 Requires:       bash boost giflib libraw1394 libtirpc
 Requires:       libusb libusbx libXext libxml2 libXt libXtst
-Requires:       motif net-snmp-libs pcre perl re2c readline rpcgen zeromq libevent
+Requires:       motif net-snmp-libs pcre perl re2c readline-devel rpcgen zeromq libevent
 
 BuildArch:      x86_64
 
