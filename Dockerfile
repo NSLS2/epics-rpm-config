@@ -66,7 +66,7 @@ RUN dnf -y install dnf-plugins-core epel-release && \
 
 # Install runtime dependencies and development tools
 RUN dnf -y update && dnf -y install /rpms/*.rpm && \
-    dnf -y install perl wget tar make cmake gcc gcc-c++ pkgconfig git \
+    dnf -y install perl wget tar make cmake gcc gcc-c++ pkgconfig git && \
     dnf -y install python3 && \
     dnf clean all
 
