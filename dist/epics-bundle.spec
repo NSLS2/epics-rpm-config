@@ -1,6 +1,6 @@
 Name:           epics-bundle
 Version:        7.0.10_0.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD-3-Clause
@@ -92,6 +92,9 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 #/lib64/*
 
 %changelog
+* Fri Jan 09 2026 Wlodek, Jakub <jwlodek@bnl.gov> - 7.0.10_0.0.0-2
+- Change requires from readline to readline-devel
+
 * Tue Jan 06 2026 Wlodek, Jakub <jwlodek@bnl.gov> - 7.0.10_0.0.0-1
 - Bump version of EPICS base to 7.0.10 along with many modules
 - Remove AD driver modules - artifacts were unused generally and increased file sizes
