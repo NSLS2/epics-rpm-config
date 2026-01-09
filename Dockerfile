@@ -46,10 +46,10 @@ ENV MAKEFLAGS="-j1"
 ENV CXXFLAGS="-O0 -g0"
 ENV CFLAGS="-O0 -g0"
 RUN make rpm && \
-    make srpm && \
     mkdir -p /rpms && \
-    mkdir -p /srpms/ && \
     cp *.rpm /rpms/ && \
+    make srpm && \
+    mkdir -p /srpms/ && \
     cp *.src.rpm /srpms/ && \
     rm -rf rpmbuildtree BUILD INSTALL
 
