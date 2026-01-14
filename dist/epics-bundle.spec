@@ -14,7 +14,7 @@ BuildRequires:  make motif-devel net-snmp-devel perl-devel
 BuildRequires:  pkgconf re2c readline-devel rpcgen tar wget zeromq-devel
 BuildRequires:  git-rpm-tools libevent-devel
 %if 0%{?rhel} >= 10
-BuildRequires:  pcre2-devel
+BuildRequires:  pcre2-devel perl-core
 %else
 BuildRequires:  pcre-devel libusb-devel
 %endif
