@@ -8,14 +8,21 @@ URL:            https://github.com/NSLS2/rhel8-epics-config
 Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires:  python3 boost-devel cmake gcc gcc-c++ giflib-devel git
-BuildRequires:  libraw1394 libtirpc-devel libusb-devel libusbx-devel
+BuildRequires:  libraw1394 libtirpc-devel libusbx-devel
 BuildRequires:  libXext-devel libxml2-devel libXt-devel libXtst-devel
-BuildRequires:  make motif-devel net-snmp-devel pcre-devel perl-devel
+BuildRequires:  make motif-devel net-snmp-devel perl-devel
 BuildRequires:  pkgconf re2c readline-devel rpcgen tar wget zeromq-devel
 BuildRequires:  git-rpm-tools
 Requires:       bash boost giflib libraw1394 libtirpc
-Requires:       libusb libusbx libXext libxml2 libXt libXtst
-Requires:       motif net-snmp-libs pcre perl re2c readline rpcgen zeromq
+Requires:       libusbx libXext libxml2 libXt libXtst
+Requires:       motif net-snmp-libs perl re2c readline rpcgen zeromq
+%if 0%{?rhel} >= 10
+BuildRequires:  pcre2-devel
+Requires:       pcre2 libusb1
+%else
+BuildRequires:  pcre-devel libusb-devel
+Requires:       pcre libusb
+%endif
 
 BuildArch:      x86_64
 
