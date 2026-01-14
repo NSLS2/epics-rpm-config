@@ -83,7 +83,7 @@ jobs:
     - name: Upload RPM as artifact
       uses: actions/upload-artifact@v4
       with:
-        name: epics-bundle-rpm-alma${{ matrix.alma_version }}
+        name: epics-bundle-rpm-el${{ matrix.alma_version }}
         path: ./rpms/*.rpm
 
     - name: Upload RPM to GitHub Release
@@ -91,6 +91,27 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         gh release upload ${{ github.event.release.tag_name }} ./rpms/*.rpm --clobber
+
+
+    - name: Extract SRPM from Docker image
+      run: |
+        docker load -i /tmp/image.tar
+        container_id=$(docker create $(docker images -q | head -n1))
+        docker cp $container_id:/srpms/. ./srpms/
+        docker rm $container_id
+        ls -la ./srpms/
+
+    - name: Upload SRPM as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: epics-bundle-srpm
+        path: ./srpms/*.src.rpm
+
+    - name: Upload SRPM to GitHub Release
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh release upload ${{ github.event.release.tag_name }} ./srpms/*.src.rpm --clobber
 
     - name: Test container
       run: |
