@@ -20,7 +20,12 @@ BuildRequires:  pcre-devel libusb-devel
 %endif
 Requires:       bash boost giflib libraw1394 libtirpc
 Requires:       libusb libusbx libXext libxml2 libXt libXtst
-Requires:       motif net-snmp-libs pcre perl re2c readline-devel rpcgen zeromq libevent
+Requires:       motif net-snmp-libs perl re2c readline-devel rpcgen zeromq libevent
+%if 0%{?rhel} >= 10
+Requires:       pcre2
+%else
+Requires:       pcre
+%endif
 
 BuildArch:      x86_64
 
