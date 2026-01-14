@@ -1,6 +1,6 @@
 Name:           epics-bundle
 Version:        7.0.10_0.0.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD-3-Clause
@@ -97,6 +97,9 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 #/lib64/*
 
 %changelog
+* Wed Jan 14 2026 Wlodek, Jakub <jwlodek@bnl.gov> - 7.0.10_0.0.0-3
+- Update to github actions and docker build tooling to matrix builds for el8 through el10
+
 * Fri Jan 09 2026 Wlodek, Jakub <jwlodek@bnl.gov> - 7.0.10_0.0.0-2
 - Change requires from readline to readline-devel
 
