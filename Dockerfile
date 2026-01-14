@@ -1,17 +1,32 @@
 # Multi-stage build for EPICS bundle RPM
-FROM almalinux:8 AS builder
+ARG ALMA_VERSION=8
+FROM almalinux:${ALMA_VERSION} AS builder
+
+# Re-declare ARG after FROM to make it available in RUN commands
+ARG ALMA_VERSION=8
 
 # Enable PowerTools/CodeReady Builder repo and EPEL for additional packages
+# Note: AlmaLinux 8 uses "powertools", AlmaLinux 9 uses "crb"
 RUN dnf -y install dnf-plugins-core epel-release && \
-    dnf config-manager --set-enabled powertools
+    if [ "${ALMA_VERSION}" = "8" ]; then \
+        dnf config-manager --set-enabled powertools; \
+    else \
+        dnf config-manager --set-enabled crb; \
+    fi
 
 # Install build dependencies including rpmdevtools
 RUN dnf -y update && \
-    dnf -y install re2c readline-devel libxml2-devel pcre-devel libtirpc-devel \
+    dnf -y install re2c readline-devel libxml2-devel libtirpc-devel \
     libusbx-devel libXext-devel libjpeg-devel perl-devel git wget tar make \
-    cmake gcc gcc-c++ pkgconfig libraw1394 boost-devel libusb-devel rpcgen \
+    cmake gcc gcc-c++ pkgconfig libraw1394 boost-devel rpcgen \
     net-snmp-devel motif-devel libXt-devel zeromq-devel giflib-devel \
     libXtst-devel python3 rpm-build rpmdevtools libevent-devel && \
+    dnf -y install perl-FindBin perl-Pod-Html perl-Getopt-Long perl-Data-Dumper || true && \
+    if [ "$ALMA_VERSION" = "10" ]; then \
+        dnf -y install pcre2-devel perl-core; \
+    else \
+        dnf -y install pcre-devel libusb-devel; \
+    fi && \
     dnf clean all
 
 # Install git-rpm-tools from NSLS2 repository
@@ -54,15 +69,24 @@ RUN make rpm && \
     rm -rf rpmbuildtree BUILD INSTALL
 
 # Final stage - runtime image
-FROM almalinux:8
+ARG ALMA_VERSION=8
+FROM almalinux:${ALMA_VERSION}
+
+# Re-declare ARG after FROM to make it available in RUN commands
+ARG ALMA_VERSION=8
 
 # Copy RPM from builder stage for extraction by CI workflow
 COPY --from=builder /rpms /rpms
 COPY --from=builder /srpms /srpms
 
 # Enable PowerTools/CodeReady Builder repo and EPEL for additional packages
+# Note: AlmaLinux 8 uses "powertools", AlmaLinux 9 uses "crb"
 RUN dnf -y install dnf-plugins-core epel-release && \
-    dnf config-manager --set-enabled powertools
+    if [ "${ALMA_VERSION}" = "8" ]; then \
+        dnf config-manager --set-enabled powertools; \
+    else \
+        dnf config-manager --set-enabled crb; \
+    fi
 
 # Install runtime dependencies and development tools
 RUN dnf -y update && dnf -y install /rpms/*.rpm && \

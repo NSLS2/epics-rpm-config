@@ -148,9 +148,14 @@ docker run -it ghcr.io/nsls2/epics-alma8:latest
 # Initialize submodules first
 git submodule update --init --recursive
 
-# Build the container
+# Build the container (AlmaLinux 8 - default)
 docker build -t epics-alma8 .
+
+# Or build for AlmaLinux 10
+docker build --build-arg ALMA_VERSION=10 -t epics-alma10 .
 
 # Run container
 docker run -it epics-alma8
+# or
+docker run -it epics-alma10
 ```
