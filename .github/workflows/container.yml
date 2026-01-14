@@ -104,7 +104,7 @@ jobs:
     - name: Upload SRPM as artifact
       uses: actions/upload-artifact@v4
       with:
-        name: epics-bundle-srpm
+        name: epics-bundle-srpm-el${{ matrix.alma_version }}
         path: ./srpms/*.src.rpm
 
     - name: Upload SRPM to GitHub Release
