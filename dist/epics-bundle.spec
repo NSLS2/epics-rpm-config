@@ -1,10 +1,10 @@
 Name:           epics-bundle
-Version:        7.0.5_0.0.0
+Version:        7.0.10_0.0.0
 Release:        2%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD-3-Clause
-URL:            https://github.com/NSLS2/rhel8-epics-config
+URL:            https://github.com/NSLS2/epics-rpm-config
 Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires:  python3 boost-devel cmake gcc gcc-c++ giflib-devel git
@@ -12,10 +12,10 @@ BuildRequires:  libraw1394 libtirpc-devel libusb-devel libusbx-devel
 BuildRequires:  libXext-devel libxml2-devel libXt-devel libXtst-devel
 BuildRequires:  make motif-devel net-snmp-devel pcre-devel perl-devel
 BuildRequires:  pkgconf re2c readline-devel rpcgen tar wget zeromq-devel
-BuildRequires:  git-rpm-tools
+BuildRequires:  git-rpm-tools libevent-devel
 Requires:       bash boost giflib libraw1394 libtirpc
 Requires:       libusb libusbx libXext libxml2 libXt libXtst
-Requires:       motif net-snmp-libs pcre perl re2c readline rpcgen zeromq
+Requires:       motif net-snmp-libs pcre perl re2c readline-devel rpcgen zeromq libevent
 
 BuildArch:      x86_64
 
@@ -84,7 +84,6 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 
 %files
 %dir /usr/lib64/epics
-%dir /usr/lib
 /usr/lib64/epics/*
 /usr/lib/epics
 /usr/bin/*
@@ -93,6 +92,16 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 #/lib64/*
 
 %changelog
+* Fri Jan 09 2026 Wlodek, Jakub <jwlodek@bnl.gov> - 7.0.10_0.0.0-2
+- Change requires from readline to readline-devel
+
+* Tue Jan 06 2026 Wlodek, Jakub <jwlodek@bnl.gov> - 7.0.10_0.0.0-1
+- Bump version of EPICS base to 7.0.10 along with many modules
+- Remove AD driver modules - artifacts were unused generally and increased file sizes
+- Don't build example IOCs
+- Don't build GraphicsMagick with ADSupport
+- Tested build on RH9
+
 * Tue Apr 04 2023 Derbenev, Anton <aderbenev@bnl.gov> - 7.0.5_0.0.0-2
 - Added git-rpm-tools in BuildRequires as the Makefile uses it
 - Added LICENSE and adjusted .spec for it

@@ -17,7 +17,7 @@ RUN dnf -y update && \
     libusbx-devel libXext-devel libjpeg-devel perl-devel git wget tar make \
     cmake gcc gcc-c++ pkgconfig libraw1394 boost-devel libusb-devel rpcgen \
     net-snmp-devel motif-devel libXt-devel zeromq-devel giflib-devel \
-    libXtst-devel python3 rpm-build rpmdevtools && \
+    libXtst-devel python3 rpm-build rpmdevtools libevent-devel && \
     dnf -y install perl-FindBin perl-Pod-Html perl-Getopt-Long perl-Data-Dumper || true && \
     dnf clean all
 
@@ -55,8 +55,10 @@ ENV CFLAGS="-O0 -g0"
 RUN make rpm && \
     mkdir -p /rpms && \
     cp *.rpm /rpms/ && \
-    rm -rf rpmbuildtree BUILD INSTALL && \
-    dnf -y install perl && dnf -y install /rpms/*.rpm
+    make srpm && \
+    mkdir -p /srpms/ && \
+    cp *.src.rpm /srpms/ && \
+    rm -rf rpmbuildtree BUILD INSTALL
 
 # Final stage - runtime image
 ARG ALMA_VERSION=8
@@ -64,6 +66,7 @@ FROM almalinux:${ALMA_VERSION}
 
 # Copy RPM from builder stage for extraction by CI workflow
 COPY --from=builder /rpms /rpms
+COPY --from=builder /srpms /srpms
 
 # Enable PowerTools/CodeReady Builder repo and EPEL for additional packages
 # Note: AlmaLinux 8 uses "powertools", AlmaLinux 9 uses "crb"
@@ -75,36 +78,10 @@ RUN dnf -y install dnf-plugins-core epel-release && \
     fi
 
 # Install runtime dependencies and development tools
-RUN dnf -y update && \
-    dnf -y install bash boost giflib libraw1394 libtirpc libusb libusbx \
-    libXext libxml2 libXt libXtst motif net-snmp-libs pcre perl re2c \
-    readline rpcgen zeromq python39 python39-pip && \
-    dnf -y install python3-requests python3-pyyaml python3-dnf && \
-    dnf -y install procServ git libxml2-devel libXext-devel zlib-devel libX11-devel && \
-    dnf -y groupinstall "Development Tools" && \
-    dnf -y install gcc gcc-c++ make readline-devel && \
-    dnf -y install seq || true && \
+RUN dnf -y update && dnf -y install /rpms/*.rpm && \
+    dnf -y install perl wget tar make cmake gcc gcc-c++ pkgconfig git && \
+    dnf -y install python3 && \
     dnf clean all
-
-# Copy EPICS installation from builder stage
-COPY --from=builder /usr/lib64/epics /usr/lib64/epics
-COPY --from=builder /usr/lib/epics /usr/lib/epics
-COPY --from=builder /usr/bin/caget /usr/bin/caget
-COPY --from=builder /usr/bin/cainfo /usr/bin/cainfo
-COPY --from=builder /usr/bin/camonitor /usr/bin/camonitor
-COPY --from=builder /usr/bin/caput /usr/bin/caput
-COPY --from=builder /usr/bin/caRepeater /usr/bin/caRepeater
-COPY --from=builder /usr/bin/casw /usr/bin/casw
-COPY --from=builder /usr/bin/pvget /usr/bin/pvget
-COPY --from=builder /usr/bin/pvinfo /usr/bin/pvinfo
-COPY --from=builder /usr/bin/pvmonitor /usr/bin/pvmonitor
-COPY --from=builder /usr/bin/pvput /usr/bin/pvput
-COPY --from=builder /usr/bin/pvlist /usr/bin/pvlist
-COPY --from=builder /usr/bin/edm /usr/bin/edm
-COPY --from=builder /usr/bin/medm /usr/bin/medm
-COPY --from=builder /usr/bin/msi /usr/bin/msi
-COPY --from=builder /usr/bin/makeBaseApp /usr/bin/makeBaseApp
-COPY --from=builder /etc/ld.so.conf.d/epics-bundle-x86_64.conf /etc/ld.so.conf.d/epics-bundle-x86_64.conf
 
 # Update library cache
 RUN ldconfig
