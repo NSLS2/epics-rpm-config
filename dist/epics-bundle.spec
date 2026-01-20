@@ -1,6 +1,6 @@
 Name:           epics-bundle
-Version:        7.0.10_0.0.0
-Release:        3%{?dist}
+Version:        7.0.10_1.0.0
+Release:        1%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD-3-Clause
@@ -55,6 +55,12 @@ if [ ! -d %{_topdir}/INSTALL/epics ]; then
     patch -p1 < %{_builddir}/%{name}-%{version}/dist/makeBaseApp-basepath.patch
     patch -p1 < %{_builddir}/%{name}-%{version}/dist/disable-debug.patch
 
+    # TODO: Build tool should copy these files for us
+    cp %{_builddir}/support/sequencer/configure/RULES_SNCSEQ configure/.
+    mkdir ADApp
+    cp -r %{_builddir}/support/areaDetector/ADCore/ADApp/commonDriverMakefile ADApp
+    cp -r %{_builddir}/support/areaDetector/ADCore/ADApp/commonLibraryMakefile ADApp
+
     # Blanket-fix any missing permissions
     chmod u+w -R %{_topdir}/INSTALL
 fi
@@ -97,6 +103,12 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 #/lib64/*
 
 %changelog
+* Tue Jan 20 2026 Wlodek, Jakub <jwlodek@bnl.gov> - 7.0.10_1.0.0-1
+- Remove dependency on ADSupport, and link to system version of all support libraries for ADCore.
+- Add in some optional third party areaDetector plugins.
+- Include some files in resulting flattened EPICS bundle that were missing but required for downstream builds.
+- Remove TPMAC module, add PMAC module.
+
 * Wed Jan 14 2026 Wlodek, Jakub <jwlodek@bnl.gov> - 7.0.10_0.0.0-3
 - Update to github actions and docker build tooling to matrix builds for el8 through el10
 
