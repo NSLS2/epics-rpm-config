@@ -41,9 +41,10 @@ CAMAC            R2-7-5               $(SUPPORT)/camac                         c
 OPTICS           R2-14                $(SUPPORT)/optics                        optics                   YES              YES              YES
 SNCSEQ           R2-2-9               $(SUPPORT)/sequencer                     sequencer                YES              YES              YES
 
-GIT_URL=https://github.com/DiamondLightSource
+# TODO: add this back once we can handle softlinks in configure folders
+# GIT_URL=https://github.com/DiamondLightSource
 
-PMAC            master                $(SUPPORT)/pmac                           pmac                    YES              YES              YES
+# PMAC            master                $(SUPPORT)/pmac                           pmac                    YES              YES              YES
 
 GIT_URL=https://github.com/NSLS2/
 
