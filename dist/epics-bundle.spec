@@ -64,7 +64,8 @@ if [ ! -d %{_topdir}/INSTALL/epics ]; then
     patch -p1 < %{_builddir}/%{name}-%{version}/dist/disable-debug.patch
 
     # TODO: Build tool should copy these files for us
-    cp %{_builddir}/support/sequencer/configure/RULES_SNCSEQ configure/.
+    mkdir -p configure/rules.d
+    cp %{_builddir}/support/sequencer/configure/RULES_SNCSEQ configure/rules.d/.
     mkdir ADApp
     cp -r %{_builddir}/support/areaDetector/ADCore/ADApp/commonDriverMakefile ADApp
     cp -r %{_builddir}/support/areaDetector/ADCore/ADApp/commonLibraryMakefile ADApp
