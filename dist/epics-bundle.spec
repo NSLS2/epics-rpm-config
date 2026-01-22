@@ -7,20 +7,40 @@ License:        BSD-3-Clause
 URL:            https://github.com/NSLS2/epics-rpm-config
 Source0:        %{name}-%{version}.tar.gz
 
-BuildRequires:  python3 boost-devel cmake gcc gcc-c++ giflib-devel git
-BuildRequires:  libraw1394 libtirpc-devel libusbx-devel
+BuildRequires:  python3 cmake gcc gcc-c++ giflib-devel git
+BuildRequires:  libtirpc-devel libusbx-devel
 BuildRequires:  libXext-devel libxml2-devel libXt-devel libXtst-devel
 BuildRequires:  make motif-devel net-snmp-devel perl-devel
 BuildRequires:  pkgconf re2c readline-devel rpcgen tar wget zeromq-devel
-BuildRequires:  git-rpm-tools libevent-devel
+BuildRequires:  git-rpm-tools libevent-devel libjpeg-devel libtiff-devel
+BuildRequires:  opencv-devel hdf5-devel blosc-devel lz4-devel
 %if 0%{?rhel} >= 10
-BuildRequires:  pcre2-devel perl-core
+BuildRequires:  pcre2-devel perl-core libusb1-devel
 %else
 BuildRequires:  pcre-devel libusb-devel
 %endif
-Requires:       bash boost giflib libraw1394 libtirpc
+
+%if 0%{?rhel} >= 9
+BuildRequires:  zlib-ng-compat zlib-ng-compat-devel
+%else
+BuildRequires:  zlib zlib-devel
+%endif
+
+Requires:       bash giflib libtirpc
 Requires:       libusb libusbx libXext libxml2 libXt libXtst
-Requires:       motif net-snmp-libs pcre perl re2c readline-devel rpcgen zeromq libevent
+Requires:       motif net-snmp-libs perl re2c readline-devel rpcgen zeromq libevent
+Requires:       opencv-core opencv-videoio libjpeg libtiff hdf5 blosc lz4
+%if 0%{?rhel} >= 10
+Requires:  pcre2 perl-core libusb1
+%else
+Requires:  pcre libusb
+%endif
+
+%if 0%{?rhel} >= 9
+Requires:  zlib-ng-compat
+%else
+Requires:  zlib
+%endif
 
 BuildArch:      x86_64
 
