@@ -20,7 +20,7 @@ BuildRequires:  pcre2-devel perl-core libusb1-devel
 BuildRequires:  pcre-devel libusb-devel
 %endif
 
-%if 0%{?rhel} >= 9
+%if 0%{?rhel} >= 10
 BuildRequires:  zlib-ng-compat zlib-ng-compat-devel
 %else
 BuildRequires:  zlib zlib-devel
