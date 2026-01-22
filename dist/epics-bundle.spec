@@ -17,7 +17,7 @@ BuildRequires:  opencv-devel hdf5-devel blosc-devel lz4-devel
 %if 0%{?rhel} >= 10
 BuildRequires:  pcre2-devel perl-core libusb1-devel zlib-ng-compat-devel
 %else
-BuildRequires:  pcre-devel libusb-devel zlibe-devel
+BuildRequires:  pcre-devel libusb-devel zlib-devel
 %endif
 
 Requires:       bash giflib libtirpc
