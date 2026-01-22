@@ -15,31 +15,19 @@ BuildRequires:  pkgconf re2c readline-devel rpcgen tar wget zeromq-devel
 BuildRequires:  git-rpm-tools libevent-devel libjpeg-devel libtiff-devel
 BuildRequires:  opencv-devel hdf5-devel blosc-devel lz4-devel
 %if 0%{?rhel} >= 10
-BuildRequires:  pcre2-devel perl-core libusb1-devel
+BuildRequires:  pcre2-devel perl-core libusb1-devel zlib-ng-compat-devel
 %else
-BuildRequires:  pcre-devel libusb-devel
-%endif
-
-%if 0%{?rhel} >= 10
-BuildRequires:  zlib-ng-compat zlib-ng-compat-devel
-%else
-BuildRequires:  zlib zlib-devel
+BuildRequires:  pcre-devel libusb-devel zlibe-devel
 %endif
 
 Requires:       bash giflib libtirpc
 Requires:       libusb libusbx libXext libxml2 libXt libXtst
 Requires:       motif net-snmp-libs perl re2c readline-devel rpcgen zeromq libevent
-Requires:       opencv-core opencv-videoio libjpeg libtiff hdf5 blosc lz4
+Requires:       opencv-core libjpeg libtiff hdf5 blosc lz4
 %if 0%{?rhel} >= 10
-Requires:  pcre2 perl-core libusb1
+Requires:  pcre2 perl-core libusb1 opencv-videoio zlib-ng-compat
 %else
-Requires:  pcre libusb
-%endif
-
-%if 0%{?rhel} >= 9
-Requires:  zlib-ng-compat
-%else
-Requires:  zlib
+Requires:  pcre libusb zlib
 %endif
 
 BuildArch:      x86_64
