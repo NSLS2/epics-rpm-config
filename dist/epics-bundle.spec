@@ -1,30 +1,33 @@
 Name:           epics-bundle
-Version:        7.0.10_0.0.0
-Release:        3%{?dist}
+Version:        7.0.10_1.0.0
+Release:        1%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD-3-Clause
 URL:            https://github.com/NSLS2/epics-rpm-config
 Source0:        %{name}-%{version}.tar.gz
 
-BuildRequires:  python3 boost-devel cmake gcc gcc-c++ giflib-devel git
-BuildRequires:  libraw1394 libtirpc-devel libusbx-devel
+BuildRequires:  python3 cmake gcc gcc-c++ giflib-devel git
+BuildRequires:  libtirpc-devel libusbx-devel
 BuildRequires:  libXext-devel libxml2-devel libXt-devel libXtst-devel
 BuildRequires:  make motif-devel net-snmp-devel perl-devel
 BuildRequires:  pkgconf re2c readline-devel rpcgen tar wget zeromq-devel
-BuildRequires:  git-rpm-tools libevent-devel
+BuildRequires:  git-rpm-tools libevent-devel libjpeg-devel libtiff-devel
+BuildRequires:  opencv-devel hdf5-devel blosc-devel lz4-devel
 %if 0%{?rhel} >= 10
-BuildRequires:  pcre2-devel perl-core
+BuildRequires:  pcre2-devel perl-core libusb1-devel zlib-ng-compat-devel
 %else
-BuildRequires:  pcre-devel libusb-devel
+BuildRequires:  pcre-devel libusb-devel zlib-devel
 %endif
-Requires:       bash boost giflib libraw1394 libtirpc
+
+Requires:       bash giflib libtirpc
 Requires:       libusb libusbx libXext libxml2 libXt libXtst
 Requires:       motif net-snmp-libs perl re2c readline-devel rpcgen zeromq libevent
+Requires:       opencv-core libjpeg libtiff hdf5 blosc lz4
 %if 0%{?rhel} >= 10
-Requires:       pcre2
+Requires:  pcre2 perl-core libusb1 opencv-videoio zlib-ng-compat
 %else
-Requires:       pcre
+Requires:  pcre libusb zlib
 %endif
 
 BuildArch:      x86_64
@@ -59,6 +62,13 @@ if [ ! -d %{_topdir}/INSTALL/epics ]; then
     cd epics
     patch -p1 < %{_builddir}/%{name}-%{version}/dist/makeBaseApp-basepath.patch
     patch -p1 < %{_builddir}/%{name}-%{version}/dist/disable-debug.patch
+
+    # TODO: Build tool should copy these files for us
+    mkdir -p configure/rules.d
+    cp %{_builddir}/support/sequencer/configure/RULES_SNCSEQ configure/rules.d/.
+    mkdir ADApp
+    cp -r %{_builddir}/support/areaDetector/ADCore/ADApp/commonDriverMakefile ADApp
+    cp -r %{_builddir}/support/areaDetector/ADCore/ADApp/commonLibraryMakefile ADApp
 
     # Blanket-fix any missing permissions
     chmod u+w -R %{_topdir}/INSTALL
@@ -102,6 +112,12 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 #/lib64/*
 
 %changelog
+* Tue Jan 20 2026 Wlodek, Jakub <jwlodek@bnl.gov> - 7.0.10_1.0.0-1
+- Remove dependency on ADSupport, and link to system version of all support libraries for ADCore.
+- Add in some optional third party areaDetector plugins.
+- Include some files in resulting flattened EPICS bundle that were missing but required for downstream builds.
+- Remove TPMAC module, add PMAC module.
+
 * Wed Jan 14 2026 Wlodek, Jakub <jwlodek@bnl.gov> - 7.0.10_0.0.0-3
 - Update to github actions and docker build tooling to matrix builds for el8 through el10
 
