@@ -20,12 +20,13 @@ RUN dnf -y update && \
     libusbx-devel libXext-devel libjpeg-devel perl-devel git wget tar make \
     cmake gcc gcc-c++ pkgconfig libraw1394 boost-devel rpcgen \
     net-snmp-devel motif-devel libXt-devel zeromq-devel giflib-devel \
+    opencv-devel hdf5-devel blosc-devel lz4-devel libjpeg-devel libtiff-devel \
     libXtst-devel python3 rpm-build rpmdevtools libevent-devel && \
     dnf -y install perl-FindBin perl-Pod-Html perl-Getopt-Long perl-Data-Dumper || true && \
     if [ "$ALMA_VERSION" = "10" ]; then \
-        dnf -y install pcre2-devel perl-core; \
+        dnf -y install pcre2-devel perl-core libusb1 opencv-videoio zlib-ng-compat; \
     else \
-        dnf -y install pcre-devel libusb-devel; \
+        dnf -y install pcre-devel libusb-devel zlib; \
     fi && \
     dnf clean all
 
