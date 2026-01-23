@@ -1,6 +1,6 @@
 Name:           epics-bundle
 Version:        7.0.10_1.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD-3-Clause
@@ -115,6 +115,9 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 #/lib64/*
 
 %changelog
+* Fri Jan 23 2026 Jakub Wlodek <jwlodek@bnl.gov> - 7.0.10_1.0.0-2
+- Update to use devel versions of packages in 'Requires'.
+
 * Tue Jan 20 2026 Wlodek, Jakub <jwlodek@bnl.gov> - 7.0.10_1.0.0-1
 - Remove dependency on ADSupport, and link to system version of all support libraries for ADCore.
 - Add in some optional third party areaDetector plugins.
