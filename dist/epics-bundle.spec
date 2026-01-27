@@ -1,6 +1,6 @@
 Name:           epics-bundle
 Version:        7.0.10_1.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        EPICS Base and Modules bundle
 
 License:        BSD-3-Clause
@@ -13,21 +13,24 @@ BuildRequires:  libXext-devel libxml2-devel libXt-devel libXtst-devel
 BuildRequires:  make motif-devel net-snmp-devel perl-devel
 BuildRequires:  pkgconf re2c readline-devel rpcgen tar wget zeromq-devel
 BuildRequires:  git-rpm-tools libevent-devel libjpeg-devel libtiff-devel
-BuildRequires:  opencv-devel hdf5-devel blosc-devel lz4-devel
+BuildRequires:  opencv-devel hdf5-devel blosc-devel lz4-devel libaec-devel
 %if 0%{?rhel} >= 10
 BuildRequires:  pcre2-devel perl-core libusb1-devel zlib-ng-compat-devel
 %else
 BuildRequires:  pcre-devel libusb-devel zlib-devel
 %endif
 
-Requires:       bash giflib libtirpc
-Requires:       libusb libusbx libXext libxml2 libXt libXtst
-Requires:       motif net-snmp-libs perl re2c readline-devel rpcgen zeromq libevent
-Requires:       opencv-core libjpeg libtiff hdf5 blosc lz4
+Requires:  python3 cmake gcc gcc-c++ giflib-devel git
+Requires:  libtirpc-devel libusbx-devel
+Requires:  libXext-devel libxml2-devel libXt-devel libXtst-devel
+Requires:  make motif-devel net-snmp-devel perl-devel
+Requires:  pkgconf re2c readline-devel rpcgen tar wget zeromq-devel
+Requires:  git-rpm-tools libevent-devel libjpeg-devel libtiff-devel
+Requires:  opencv-devel hdf5-devel blosc-devel lz4-devel libaec-devel
 %if 0%{?rhel} >= 10
-Requires:  pcre2 perl-core libusb1 opencv-videoio zlib-ng-compat
+Requires:  pcre2-devel perl-core libusb1-devel zlib-ng-compat-devel
 %else
-Requires:  pcre libusb zlib
+Requires:  pcre-devel libusb-devel zlib-devel
 %endif
 
 BuildArch:      x86_64
@@ -112,6 +115,9 @@ ln -s /usr/lib64/epics %{buildroot}/usr/lib/epics
 #/lib64/*
 
 %changelog
+* Fri Jan 23 2026 Jakub Wlodek <jwlodek@bnl.gov> - 7.0.10_1.0.0-2
+- Update to use devel versions of packages in 'Requires'.
+
 * Tue Jan 20 2026 Wlodek, Jakub <jwlodek@bnl.gov> - 7.0.10_1.0.0-1
 - Remove dependency on ADSupport, and link to system version of all support libraries for ADCore.
 - Add in some optional third party areaDetector plugins.
