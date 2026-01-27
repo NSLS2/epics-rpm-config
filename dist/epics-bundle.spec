@@ -25,7 +25,7 @@ Requires:  libtirpc-devel libusbx-devel
 Requires:  libXext-devel libxml2-devel libXt-devel libXtst-devel
 Requires:  make motif-devel net-snmp-devel perl-devel
 Requires:  pkgconf re2c readline-devel rpcgen tar wget zeromq-devel
-Requires:  git-rpm-tools libevent-devel libjpeg-devel libtiff-devel
+Requires:  libevent-devel libjpeg-devel libtiff-devel
 Requires:  opencv-devel hdf5-devel blosc-devel lz4-devel libaec-devel
 %if 0%{?rhel} >= 10
 Requires:  pcre2-devel perl-core libusb1-devel zlib-ng-compat-devel
